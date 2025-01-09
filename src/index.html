@@ -10,16 +10,20 @@
 
 <body class="bg-gray-900">
     <div class="container mx-auto">
-        <div class="p-3 mt-4">
-            <div class="flex justify-around items-center bg-orange-400 border border-white rounded-md">
 
-                <div class="w-20 h-20  rounded-full border border-red-400 m-3 flex justify-center items-center">
+        
+        <div class="p-3">
+            <div class="flex flex-col items-center sm:flex-col sm:items-center md:flex-row md:justify-around p-3 bg-orange-400 border border-white rounded-md ">
+
+                <div class="w-20 h-20 rounded-full border border-red-400">
                     <a href="#">
                         <img class="rounded-full" src="/src/img/Logotipo.svg" alt="">
                     </a>
                 </div>
-                <h1 class="font-bold text-lg tracking-wide uppercase text-white ">Uma Mercearia</h1>
-                <ul class="flex gap-5 text-white">
+
+                <h1 class="font-bold text-lg tracking-wide uppercase text-white">Uma Mercearia</h1>
+
+                <ul class="flex flex-col items-center sm:justify-center sm:flex-row p-3 gap-5  text-white">
                     <li>
                         <a class="hover:text-orange-700 hover:border-b border-b-orange-700 duration-500  pb-1 font-bold tracking-wide"
                             href="">Doces</a>
@@ -41,21 +45,21 @@
                 </ul>
             </div>
 
-            <div id="slider" class="h-screen flex justify-between items-center overflow-hidden text-orange-950">
-                <div class=" flex justify-center items-center ml-6">
+            <div id="slider" class="flex justify-around items-center overflow-hidden text-orange-950">
+                <div class="flex justify-center items-center absolute left-8 top-80 pt-40  sm:left-16 sm:top-80 sm:pt-10 md:top-64 lg:top-72 lg:pt-20 lg:left-28 2xl:pt-32 2xl:left-32 2xl:pl-36 z-20">
                     <button id="back">
-                        <img class="w-14 h-14 bg-orange-950 rounded-full" src="/src/img/back.svg" alt="">
+                        <img class="w-10 h-10 bg-orange-700 rounded-full" src="/src/img/back.svg" alt="">
                     </button>
                 </div>
 
-                <div class="flex justify-center items-center mr-6">
+                <div class="flex items-center justify-center absolute right-8 top-80 pt-40  sm:right-16 sm:top-80 sm:pt-10 md:top-64 lg:top-72 lg:pt-20 lg:right-28 2xl:pt-32 2xl:right-32 2xl:pr-36 z-20">
                     <button id="next">
-                        <img class="w-14 h-14 bg-orange-950 rounded-full" src="/src/img/Next.svg" alt="">
+                        <img class="w-10 h-10 bg-orange-700 rounded-full" src="/src/img/Next.svg" alt="">
                     </button>
                 </div>
             </div> <!-- End div slider -->
-
-            <div id="img-slide" class="flex justify-center absolute top-80 -z-20">
+ 
+            <div id="img-slide" class="flex items-center justify-center pt-20">
                 <div class=" ">
                     <img src="/src/img/Logotipo.svg" alt="">
                 </div>
@@ -67,6 +71,8 @@
                 </div>
             </div> <!-- End div img-slider -->
         </div>
+
+
     </div>
 </body>
 
