@@ -44,33 +44,38 @@
                 </ul>
             </div>
 
-            <div id="slider" class="flex justify-around items-center overflow-hidden text-orange-950">
-                <div class="flex justify-center items-center absolute left-8 top-80 pt-40  sm:left-16 sm:top-80 sm:pt-10 md:top-64 lg:top-72 lg:pt-20 lg:left-28 2xl:pt-32 2xl:left-32 2xl:pl-36 z-20">
-                    <button id="back">
-                        <img class="w-10 h-10 bg-orange-700 rounded-full" src="/src/img/back.svg" alt="">
-                    </button>
-                </div>
-
-                <div class="flex items-center justify-center absolute right-8 top-80 pt-40  sm:right-16 sm:top-80 sm:pt-10 md:top-64 lg:top-72 lg:pt-20 lg:right-28 2xl:pt-32 2xl:right-32 2xl:pr-36 z-20">
-                    <button id="next">
-                        <img class="w-10 h-10 bg-orange-700 rounded-full" src="/src/img/Next.svg" alt="">
-                    </button>
-                </div>
-            </div> <!-- End div slider -->
- 
-            <div id="img-slide" class="flex items-center justify-center pt-20">
-                <div class=" ">
-                    <img src="/src/img/Logotipo.svg" alt="">
-                </div>
-                <div class="">
-                    <img src="/src/img/Logotipo.svg" alt="">
-                </div>
-                <div class="">
-                    <img src="/src/img/Logotipo.svg" alt="">
-                </div>
-            </div> <!-- End div img-slider -->
+        <div class="flex justify-center mt-6">
+                <img class="w-64" src="./img/loto-title.png" alt="">
         </div>
-        <script src="/src/slide.js"></script>
+
+        <div id="slider" class="overflow-hidden">
+            <div id="slider-btn" class="absolute z-50 w-4/5 flex justify-between items-center">
+                <button id="slider-controls" class="w-12 h-12 bg-orange-400 overflow-hidden rounded-full"
+                    onclick="goBack()">back</button>
+                <button id="slider-controls" class="w-12 h-12 bg-orange-400 overflow-hidden rounded-full"
+                    onclick="goNext()">next</button>
+            </div>
+            <div id="slider-width" class="h-full flex ease-in duration-100">
+                <div>
+                    <img id="slider-tems" class="w-screen h-full bg-center bg-cover"
+                        src="https://despensasqueretanas.com/wp-content/uploads/2019/02/despensas-tienda-09-min-e1551065527747.png"
+                        alt="">
+                </div>
+                <div>
+                    <img id="slider-tems" class="w-screen h-full bg-center bg-cover"
+                        src="https://1.bp.blogspot.com/-z0dhbYjfeLc/V1H_2d40idI/AAAAAAAAAso/iaFjNGl27Hcb1TCQ6qv4zc0dhhfeMqLgwCLcB/w1200-h630-p-k-no-nu/venta-de-canastas-navideas-segun-requerimientos-todos-los-productos-son-precio-a-0-0-4.jpg"
+                        alt="">
+                </div>
+                <div>
+                    <img id="slider-tems" class="w-screen h-full bg-center bg-cover"
+                        src="https://f14b0e3835.cbaul-cdnwnd.com/69725464c7986520b60dba693d597f3a/200000003-5e9a45f940/XDDDDDDDDDDDDDDD.png?ph=f14b0e3835"
+                        alt="">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="/src/slide.js"></script>
 </body>
 
 </html>
