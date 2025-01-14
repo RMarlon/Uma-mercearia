@@ -1,17 +1,21 @@
 let currentSlider = 0;
 
+const sliderScreen = document.querySelector("#slider") as HTMLElement;
 const totalSlides = document.querySelectorAll("#slider-tems").length;
-const sliderBtn = document.querySelector("#slider-controls") as HTMLButtonElement;
+const sliderBtn = document.querySelector( "#slider-controls") as HTMLButtonElement;
 const sliderWidth = document.querySelector("#slider-width") as HTMLElement;
 
 if (sliderWidth) {
   sliderWidth.style.width = `calc(100vw * ${totalSlides})`;
 }
 
-if (sliderBtn) {
-  sliderBtn.style.height = `${
-    document.querySelector("#slider")?.clientHeight
-  }px`;
+if (sliderScreen && sliderBtn) {
+
+   sliderBtn.style.top = "50%";
+   sliderBtn.style.left = "50%";
+   sliderBtn.style.transform = "translate(-50%, 50%)";
+
+   sliderScreen.style.position = "relative";
 }
 
 function goBack(): void {
