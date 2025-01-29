@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./img/loto-title.png" type="image/x-icon">
     <link rel="stylesheet" href="./output.css">
     <title>Uma Mercearia</title>
 </head>
@@ -50,8 +51,8 @@
 
             <div id="slider" class="overflow-hidden">
                 <div id="slider-controls" class="absolute z-50 w-4/5 flex justify-between items-center">
-                    <button class="w-12 h-12 bg-orange-400 rounded-full" onclick="goBack()">back</button>
-                    <button class="w-12 h-12 bg-orange-400 rounded-full" onclick="goNext()">next</button>
+                    <div class="w-12 h-12 flex items-center justify-center bg-orange-400 rounded-full cursor-pointer" onclick="goBack()">back</div>
+                    <div class="w-12 h-12 flex items-center justify-center bg-orange-400 rounded-full cursor-pointer" onclick="goNext()">next</div>
                 </div>
                 <div id="slider-width" class=" flex ease-in duration-100">
                     <div>
@@ -77,7 +78,7 @@
 
                 <div id="secao-d" class="mt-6 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 
-                    <div class="mb-4 mr-4">
+                    <div class="items mb-4 mr-4" id="product-0">
                         <div
                             class="w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
                             <a href="#" class="">
@@ -87,99 +88,23 @@
                             <div class="flex flex-col items-center justify-center">
                                 <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
                                     elit.</p>
-                                    <div class="flex items-center justify-center gap-4 pb-4">
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-orange-700 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-orange-500">-</button>
-                                        <span class="text-gray-700 font-bold">1</span>
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-blue-500 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-blue-600">+</button>
-                                    </div>
-                                <button
-                                    class="w-full bg-green-500 p-2 rounded-md text-white hover:opacity-90 duration-300 ease-in">Comprar</button>
+                                <div class="flex items-center justify-center gap-7 pb-4">
+                                    <button  
+                                        class="btn-less flex items-center justify-center p-2 rounded-full w-7 h-7 border border-orange-500 font-bold text-orange-700 ease-in duration-200 hover:bg-orange-300">-</button>
+                                    
+                                        <span class="quantity  text-gray-700 font-bold">1</span>
+
+                                    <button
+                                        class="btn-more flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-orange-400 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-orange-600">+</button>
+                                </div>
+                                <span class="price pb-4 text-gray-700 font-bold">R$ 3,00</span>
+                                <span
+                                    class="w-full text-center tracking-wide uppercase cursor-pointer bg-green-500 p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">Comprar</span>
                             </div>
                         </div>
                     </div>
+                    
 
-                    <div class="mb-4 mr-4">
-                        <div
-                            class="w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
-                            <a href="#" class="">
-                                <img class="rounded-md" src="/src/img/Logotipo.svg" alt="">
-                            </a>
-
-                            <div class="flex flex-col items-center justify-center">
-                                <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
-                                    elit.</p>
-                                    <div class="flex items-center justify-center gap-4 pb-4">
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-orange-700 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-orange-500">-</button>
-                                        <span class="text-gray-700 font-bold">1</span>
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-blue-500 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-blue-600">+</button>
-                                    </div>
-                                <button
-                                    class="w-full bg-green-500 p-2 rounded-md text-white hover:opacity-90 duration-300 ease-in">Comprar</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 mr-4">
-                        <div
-                            class="w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
-                            <a href="#" class="">
-                                <img class="rounded-md" src="/src/img/Logotipo.svg" alt="">
-                            </a>
-
-                            <div class="flex flex-col items-center justify-center">
-                                <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
-                                    elit.</p>
-                                    <div class="flex items-center justify-center gap-4 pb-4">
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-orange-700 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-orange-500">-</button>
-                                        <span class="text-gray-700 font-bold">1</span>
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-blue-500 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-blue-600">+</button>
-                                    </div>
-                                <button
-                                    class="w-full bg-green-500 p-2 rounded-md text-white hover:opacity-90 duration-300 ease-in">Comprar</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 mr-4">
-                        <div
-                            class="w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
-                            <a href="#" class="">
-                                <img class="rounded-md" src="/src/img/Logotipo.svg" alt="">
-                            </a>
-
-                            <div class="flex flex-col items-center justify-center">
-                                <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
-                                    elit.</p>
-                                    <div class="flex items-center justify-center gap-4 pb-4">
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-orange-700 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-orange-500">-</button>
-                                        <span class="text-gray-700 font-bold">1</span>
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-blue-500 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-blue-600">+</button>
-                                    </div>
-                                <button
-                                    class="w-full bg-green-500 p-2 rounded-md text-white hover:opacity-90 duration-300 ease-in">Comprar</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 mr-4">
-                        <div
-                            class="w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
-                            <a href="#" class="">
-                                <img class="rounded-md" src="/src/img/Logotipo.svg" alt="">
-                            </a>
-
-                            <div class="flex flex-col items-center justify-center">
-                                <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
-                                    elit.</p>
-                                    <div class="flex items-center justify-center gap-4 pb-4">
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-orange-700 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-orange-500">-</button>
-                                        <span class="text-gray-700 font-bold">1</span>
-                                        <button class="flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-blue-500 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-blue-600">+</button>
-                                    </div>
-                                <button
-                                    class="w-full bg-green-500 p-2 rounded-md text-white hover:opacity-90 duration-300 ease-in">Comprar</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -188,6 +113,7 @@
 
     </div>
     <script src="./slide.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
