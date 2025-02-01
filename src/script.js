@@ -1,10 +1,14 @@
 var items = document.querySelectorAll(".items");
+var closedModalBtn = document.querySelector("#close-modal");
+var fade = document.querySelector("#fade");
+var modal = document.querySelector("#modal");
 items.forEach(function (product) {
     var _a;
     var btnLess = product.querySelector(".btn-less");
     var btnMore = product.querySelector(".btn-more");
     var quatity = product.querySelector(".quantity");
     var price = product.querySelector(".price");
+    var buttonPay = product.querySelector(".payment");
     if (!btnLess || !btnMore || !quatity || !price)
         return;
     var count = parseInt(quatity.textContent || "1", 10);
@@ -25,4 +29,16 @@ items.forEach(function (product) {
         quatity.textContent = count.toString();
         updatePrice();
     });
+    buttonPay === null || buttonPay === void 0 ? void 0 : buttonPay.addEventListener("click", function () {
+        toggleModal();
+    });
 });
+[closedModalBtn, fade].forEach(function (element) {
+    element === null || element === void 0 ? void 0 : element.addEventListener("click", function () {
+        toggleModal();
+    });
+});
+function toggleModal() {
+    modal === null || modal === void 0 ? void 0 : modal.classList.toggle("hide");
+    fade === null || fade === void 0 ? void 0 : fade.classList.toggle("hide");
+}

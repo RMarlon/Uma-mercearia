@@ -1,10 +1,15 @@
 const items = document.querySelectorAll<HTMLElement>(".items");
+const closedModalBtn = document.querySelector<HTMLButtonElement>("#close-modal");
+const fade = document.querySelector<HTMLElement>("#fade");
+const modal = document.querySelector<HTMLElement>("#modal");
 
 items.forEach((product) => {
   const btnLess = product.querySelector<HTMLButtonElement>(".btn-less");
   const btnMore = product.querySelector<HTMLButtonElement>(".btn-more");
   const quatity = product.querySelector<HTMLSpanElement>(".quantity");
   const price = product.querySelector<HTMLSpanElement>(".price");
+  const buttonPay = product.querySelector<HTMLButtonElement>(".payment"); 
+  
 
   if (!btnLess || !btnMore || !quatity || !price) return;
 
@@ -29,4 +34,20 @@ items.forEach((product) => {
     quatity.textContent = count.toString();
     updatePrice();
   });
+
+  buttonPay?.addEventListener("click", ()=>{
+    toggleModal();
+  });
+
 });
+
+[closedModalBtn, fade].forEach((element)=>{
+  element?.addEventListener("click", ()=>{
+    toggleModal();
+  });
+});
+
+function toggleModal(){
+  modal?.classList.toggle("hide");
+  fade?.classList.toggle("hide");
+}

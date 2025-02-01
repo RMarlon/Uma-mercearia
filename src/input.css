@@ -10,3 +10,24 @@
     box-sizing: border-box;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+#fade{
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#modal{
+    width: 500px;
+    max-width: 90%;
+}
+
+.hide{
+    opacity: 0;
+}
+
+#fade.modal{
+    pointer-events: all;
+}
+
+#modal.hide{
+    top:45%;
+}
