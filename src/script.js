@@ -1,14 +1,16 @@
 var items = document.querySelectorAll(".items");
 var closedModalBtn = document.querySelector("#close-modal");
+var shoppingCart = document.getElementById("shopping-cart");
 var fade = document.querySelector("#fade");
 var modal = document.querySelector("#modal");
+var buttonPay = document.querySelector("#payment");
 items.forEach(function (product) {
     var _a;
     var btnLess = product.querySelector(".btn-less");
     var btnMore = product.querySelector(".btn-more");
     var quatity = product.querySelector(".quantity");
     var price = product.querySelector(".price");
-    var buttonPay = product.querySelector(".payment");
+    var addCart = product.querySelector(".add-cart");
     if (!btnLess || !btnMore || !quatity || !price)
         return;
     var count = parseInt(quatity.textContent || "1", 10);
@@ -29,9 +31,14 @@ items.forEach(function (product) {
         quatity.textContent = count.toString();
         updatePrice();
     });
-    buttonPay === null || buttonPay === void 0 ? void 0 : buttonPay.addEventListener("click", function () {
-        toggleModal();
+    addCart === null || addCart === void 0 ? void 0 : addCart.addEventListener("click", function () {
+        if (shoppingCart) {
+            shoppingCart.style.display = shoppingCart.style.display === "none" ? "block" : "none";
+        }
     });
+});
+buttonPay === null || buttonPay === void 0 ? void 0 : buttonPay.addEventListener("click", function () {
+    toggleModal();
 });
 [closedModalBtn, fade].forEach(function (element) {
     element === null || element === void 0 ? void 0 : element.addEventListener("click", function () {

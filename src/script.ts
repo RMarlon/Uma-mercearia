@@ -1,14 +1,17 @@
 const items = document.querySelectorAll<HTMLElement>(".items");
 const closedModalBtn = document.querySelector<HTMLButtonElement>("#close-modal");
+const shoppingCart = document.getElementById("shopping-cart") as unknown as HTMLElement | null;
 const fade = document.querySelector<HTMLElement>("#fade");
 const modal = document.querySelector<HTMLElement>("#modal");
+const buttonPay = document.querySelector<HTMLBRElement>("#payment");
+
 
 items.forEach((product) => {
   const btnLess = product.querySelector<HTMLButtonElement>(".btn-less");
   const btnMore = product.querySelector<HTMLButtonElement>(".btn-more");
   const quatity = product.querySelector<HTMLSpanElement>(".quantity");
   const price = product.querySelector<HTMLSpanElement>(".price");
-  const buttonPay = product.querySelector<HTMLButtonElement>(".payment"); 
+  const addCart = product.querySelector<HTMLButtonElement>(".add-cart");
   
 
   if (!btnLess || !btnMore || !quatity || !price) return;
@@ -35,10 +38,16 @@ items.forEach((product) => {
     updatePrice();
   });
 
-  buttonPay?.addEventListener("click", ()=>{
-    toggleModal();
+  addCart?.addEventListener("click", ()=>{
+    if (shoppingCart) {
+      shoppingCart.style.display = shoppingCart.style.display === "none" ? "block" : "none";
+    }
   });
 
+});
+
+buttonPay?.addEventListener("click", ()=>{
+  toggleModal();
 });
 
 [closedModalBtn, fade].forEach((element)=>{
