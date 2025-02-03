@@ -1,10 +1,10 @@
 const items = document.querySelectorAll<HTMLElement>(".items");
 const closedModalBtn = document.querySelector<HTMLButtonElement>("#close-modal");
 const shoppingCart = document.getElementById("shopping-cart") as unknown as HTMLElement | null;
+const buttonPay = document.querySelector<HTMLBRElement>("#payment");
 const fade = document.querySelector<HTMLElement>("#fade");
 const modal = document.querySelector<HTMLElement>("#modal");
-const buttonPay = document.querySelector<HTMLBRElement>("#payment");
-
+const car = document.querySelector<HTMLElement>(".car");
 
 items.forEach((product) => {
   const btnLess = product.querySelector<HTMLButtonElement>(".btn-less");
@@ -17,7 +17,9 @@ items.forEach((product) => {
   if (!btnLess || !btnMore || !quatity || !price) return;
 
   let count: number = parseInt(quatity.textContent || "1", 10);
-  let convertPrice: number = parseFloat(price.textContent?.replace("R$", "").trim() || "0");
+  let convertPrice: number = parseFloat(
+    price.textContent?.replace("R$", "").trim() || "0"
+  );
 
   const updatePrice = () => {
     const priceNew = (convertPrice * count).toFixed(2);
@@ -38,25 +40,29 @@ items.forEach((product) => {
     updatePrice();
   });
 
-  addCart?.addEventListener("click", ()=>{
-    if (shoppingCart) {
-      shoppingCart.style.display = shoppingCart.style.display === "none" ? "block" : "none";
-    }
+  buttonPay?.addEventListener("click", ()=>{
+    toggleModal();
   });
 
+  addCart?.addEventListener("click", () => {
+    car?.classList.add(``);
+  });
 });
 
-buttonPay?.addEventListener("click", ()=>{
-  toggleModal();
+car?.addEventListener("click", () => {
+  if (shoppingCart) {
+    shoppingCart.style.display =
+      shoppingCart.style.display === "block" ? "none" : "block";
+  }
 });
 
-[closedModalBtn, fade].forEach((element)=>{
-  element?.addEventListener("click", ()=>{
+[closedModalBtn, fade].forEach((element) => {
+  element?.addEventListener("click", () => {
     toggleModal();
   });
 });
 
-function toggleModal(){
+function toggleModal() {
   modal?.classList.toggle("hide");
   fade?.classList.toggle("hide");
 }

@@ -29,5 +29,9 @@
 }
 
 #modal.hide{
-    top:45%;
+    left:0%;
+}
+
+#shopping-cart{
+    display: none;
 }
