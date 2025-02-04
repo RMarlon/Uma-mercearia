@@ -5,6 +5,16 @@ var buttonPay = document.querySelector("#payment");
 var fade = document.querySelector("#fade");
 var modal = document.querySelector("#modal");
 var car = document.querySelector(".car");
+var removeProductBtn = document.querySelectorAll(".remove-product");
+for (var i = 0; i < removeProductBtn.length; i++) {
+    removeProductBtn[i].addEventListener("click", function (event) {
+        var targetElement = event.target;
+        var targetProduct = targetElement.closest("tr");
+        if (targetProduct) {
+            targetProduct.remove();
+        }
+    });
+}
 items.forEach(function (product) {
     var _a;
     var btnLess = product.querySelector(".btn-less");

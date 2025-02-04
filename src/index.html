@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div id="shopping-cart" class="h-full absolute right-0 bg-orange-50 border border-orange-800 p-5 z-40 rounded-md">
+            <div id="shopping-cart" class="w-auto h-screen absolute right-0 bg-orange-50 border border-orange-800 p-5 z-40 rounded-md">
                 <h2 class="text-center uppercase text-rose-400 font-bold border-b border-b-orange-800 pb-3 tracking-wider" >Carrinho</h2>
                 <table class="w-10/12 text-center">
                     <thead class="text-orange-800 uppercase tracking-wider">
@@ -62,8 +62,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="">
-                            <td class=" ">
+                        <tr class="product-in-car border-b border-b-orange-800">
+                            <td class="pb-4">
                                 <div class="w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md">
                                     <img class="rounded-md" src="/src/img/Logotipo.svg" alt="">
                                     <p class="pt-2 pb-4 text-orange-600 text-center">Lorem ipsum</p>
@@ -79,12 +79,38 @@
                             </td>
 
                             <td>
-                                <button class="w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
+                                <button class="remove-product w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
+                            </td>
+                            
+                        </tr>
+
+                        <tr class="product-in-car">
+                            <td class="pt-4">
+                                <div class="w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md">
+                                    <img class="rounded-md" src="/src/img/Logotipo.svg" alt="">
+                                    <p class="pt-2 pb-4 text-orange-600 text-center">Lorem ipsum</p>
+                                </div>
+                            </td>
+
+                            <td class=" ">
+                                <span class="text-gray-700 font-bold">R$ 5,00</span>
+                            </td>
+
+                            <td class=" ">
+                                <input class="w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1" type="number" placeholder="" value="1">
+                            </td>
+
+                            <td>
+                                <button class="remove-product w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="pt-6">
+                    <div class="total-price flex justify-end pr-2 pb-2 text-gray-700 font-bold">
+                        <span class="pr-4">Total</span>
+                        <span>R$ : 8,00</span>
+                    </div>
                     <button id="payment"
                     class="w-full text-center tracking-wide uppercase cursor-pointer bg-green-500 p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">Finalizar Compra</button>
                 </div>

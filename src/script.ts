@@ -5,6 +5,19 @@ const buttonPay = document.querySelector<HTMLBRElement>("#payment");
 const fade = document.querySelector<HTMLElement>("#fade");
 const modal = document.querySelector<HTMLElement>("#modal");
 const car = document.querySelector<HTMLElement>(".car");
+const removeProductBtn = document.querySelectorAll<HTMLButtonElement>(".remove-product");
+const productInCar = document.querySelectorAll<HTMLElement>(".product-in-car");
+
+for (let i = 0; i < removeProductBtn.length; i++){
+  removeProductBtn[i].addEventListener("click", function (event): void {
+       const targetElement = event.target as HTMLElement;
+       const targetProduct = targetElement.closest("tr");
+
+       if(targetProduct){
+        targetProduct.remove();
+       }
+    });
+}
 
 items.forEach((product) => {
   const btnLess = product.querySelector<HTMLButtonElement>(".btn-less");
