@@ -52,8 +52,8 @@
             </div>
 
             <div id="shopping-cart" class="w-auto h-auto absolute right-0 bg-orange-50 border border-orange-800 p-5 z-40 rounded-md">
-                <h2 class="text-center uppercase text-rose-400 font-bold border-b border-b-orange-800 pb-3 tracking-wider" >Carrinho</h2>
-                <table class="w-10/12 text-center">
+                <h2 class="text-center uppercase text-rose-400 font-bold border-b border-b-orange-800 pb-3 tracking-wider">Carrinho</h2>
+                <table class="table-cart w-10/12 text-center">
                     <thead class="text-orange-800 uppercase tracking-wider">
                         <tr class="p-4">
                             <th class="pr-4 pl-4 pt-4 pb-4">Item</th>
@@ -61,11 +61,11 @@
                             <th class="pr-4 pl-4">Quantidade</th>
                         </tr>
                     </thead>
-                    <tbody class="add-tbody">
+                    <tbody>
                         <tr class="product-in-cart border-b border-b-orange-800">
                             <td class="pb-4">
                                 <div class="w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md">
-                                    <h2 class="uppercase tracking-wider text-orange-800 text-center">Chiclete</h2>
+                                    <strong class="title-product-cart uppercase tracking-wider text-orange-800 text-center">Chiclete</strong>
                                     <img class="rounded-md" src="/src/img/Logotipo.svg" alt="">
                                 </div>
                             </td>
@@ -79,7 +79,7 @@
                             </td>
 
                             <td>
-                                <button class="remove-product w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
+                                <button class="remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
                             </td>
                             
                         </tr>
@@ -87,7 +87,7 @@
                         <tr class="product-in-cart">
                             <td class="pt-4">
                                 <div class="w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md">
-                                    <h2 class="uppercase tracking-wider text-orange-800 text-center">Pirulito</h2>
+                                    <strong class="title-product-cart uppercase tracking-wider text-orange-800 text-center">Pirulito</strong>
                                     <img class="rounded-md" src="/src/img/Logotipo.svg" alt="">
                                 </div>
                             </td>
@@ -101,7 +101,7 @@
                             </td>
 
                             <td>
-                                <button class="remove-product w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
+                                <button class="remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
                             </td>
                         </tr>
                     </tbody>
@@ -179,18 +179,9 @@
                             <div class="flex flex-col items-center justify-center">
                                 <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
                                     elit.</p>
-                                <div class="flex items-center justify-center gap-7 pb-4">
-                                    <button
-                                        class="btn-less flex items-center justify-center p-2 rounded-full w-7 h-7 border border-orange-800 font-bold text-orange-700 ease-in duration-200 hover:bg-orange-300">-</button>
-
-                                    <span class="quantity  text-gray-700 font-bold">1</span>
-
-                                    <button
-                                        class="btn-more flex items-center justify-center p-2 rounded-full w-7 h-7 border bg-orange-400 border-orange-800 font-bold text-white ease-in duration-200 hover:bg-orange-600">+</button>
-                                </div>
-                                <span class="price pb-4 text-gray-700 font-bold">R$ 3,00</span>
+                                <span class="product-price pb-4 text-gray-700 font-bold">R$ 3,00</span>
                             </div>
-                            <button class="add-cart w-full text-center tracking-wide uppercase cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">Adicionar ao carrinho</button>
+                            <button class="add-cart-button w-full text-center tracking-wide uppercase cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">Adicionar ao carrinho</button>
                         </div>
                     </div>
                     
