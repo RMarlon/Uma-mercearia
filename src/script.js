@@ -5,17 +5,38 @@ var fade = document.querySelector("#fade");
 var modal = document.querySelector("#modal");
 var car = document.querySelector(".car");
 //--------------
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loading);
+}
+else {
+    loading();
+}
+function loading() {
+    // Eventos
+    //--------------
+    //Pegando o botão de remover o produto
+    var removeProductCartBtn = document.querySelectorAll(".remove-product-cart");
+    for (var i = 0; i < removeProductCartBtn.length; i++) {
+        removeProductCartBtn[i].addEventListener("click", removeItem);
+    }
+    //--------------
+    //--------------
+    //Peganquando os inputs de quantidade
+    var quantityInputCart = document.querySelectorAll(".quantity-cart-product");
+    for (var i = 0; i < quantityInputCart.length; i++) {
+        quantityInputCart[i].addEventListener("change", updateTotal);
+    }
+    //--------------
+}
+//--------------
 //remover o produto do carrinho
-var removeProductCartBtn = document.querySelectorAll(".remove-product-cart");
-for (var i = 0; i < removeProductCartBtn.length; i++) {
-    removeProductCartBtn[i].addEventListener("click", function (element) {
-        var target = element.target;
-        var elementProduct = target.closest(".product-in-cart");
-        if (elementProduct) {
-            elementProduct.remove();
-        }
-        updateTotal();
-    });
+function removeItem(event) {
+    var target = event.target;
+    var elementProduct = target.closest(".product-in-cart");
+    if (elementProduct) {
+        elementProduct.remove();
+    }
+    updateTotal();
 }
 //--------------
 //Atualizando o valor dos produtos dentro do carrinho
@@ -27,7 +48,7 @@ function updateTotal() {
         var inputQuantityCart = updateValueCart[i].querySelectorAll(".quantity-cart-product")[0].value;
         totalValue += (+priceProductCart * +inputQuantityCart);
     }
-    totalValue = totalValue.toFixed(2).replace(".", ",");
+    totalValue = "".concat(totalValue.toFixed(2).replace(".", ","));
     var updateSpanValue = document.querySelector(".total-price span");
     if (updateSpanValue) {
         updateSpanValue.innerText = "R$ ".concat(totalValue.toString());

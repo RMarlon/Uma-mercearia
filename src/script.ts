@@ -6,23 +6,50 @@ const modal = document.querySelector<HTMLElement>("#modal");
 const car = document.querySelector<HTMLElement>(".car");
 
 //--------------
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", loading) as unknown as HTMLElement;
+}
+else{
+  loading();
+}
 
-//remover o produto do carrinho
-const removeProductCartBtn = document.querySelectorAll<HTMLButtonElement>(".remove-product-cart");
-for(let i = 0; i < removeProductCartBtn.length; i++){
-  removeProductCartBtn[i].addEventListener("click", function(element) {
-    const target = element.target as HTMLElement;
+function loading(){
+  // Eventos
 
-    const elementProduct = target.closest(".product-in-cart");
+  //--------------
+  //Pegando o botão de remover o produto
+  const removeProductCartBtn = document.querySelectorAll<HTMLButtonElement>(".remove-product-cart");
+  for(let i = 0; i < removeProductCartBtn.length; i++){
+      removeProductCartBtn[i].addEventListener("click", removeItem);
+  }
+  //--------------
 
-    if(elementProduct){
-      elementProduct.remove();
-    }
-    updateTotal();
-  });
+  //--------------
+  //Peganquando os inputs de quantidade
+  const quantityInputCart = document.querySelectorAll<HTMLInputElement>(".quantity-cart-product");
+  for(let i = 0; i < quantityInputCart.length; i++){
+    quantityInputCart[i].addEventListener("change", updateTotal);
+  }
+  //--------------
+  
 }
 
 //--------------
+  //remover o produto do carrinho
+function removeItem(event){
+  const target = event.target as HTMLElement;
+
+      const elementProduct = target.closest(".product-in-cart");
+
+      if(elementProduct){
+        elementProduct.remove();
+      }
+      updateTotal();
+}
+
+//--------------
+
+
 //Atualizando o valor dos produtos dentro do carrinho
 function updateTotal(){
 
@@ -36,7 +63,7 @@ function updateTotal(){
       totalValue +=  (+priceProductCart * +inputQuantityCart);
     }
 
-    totalValue = totalValue.toFixed(2).replace(".", ",");
+    totalValue = `${totalValue.toFixed(2).replace(".", ",")}`;
     
     const updateSpanValue = document.querySelector<HTMLSpanElement>(".total-price span");
     if(updateSpanValue){
