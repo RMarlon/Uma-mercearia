@@ -13,6 +13,7 @@ else{
   loading();
 }
 
+//--------------
 function loading(){
   // Eventos
 
@@ -32,7 +33,78 @@ function loading(){
   }
   //--------------
   
+  //--------------
+  //Pegando o botão de adicionar o produto ao carrinho
+  const buttonAddCart = document.querySelectorAll<HTMLButtonElement>(".add-cart-button");
+  for(let i = 0; i < buttonAddCart.length; i++){
+      buttonAddCart[i].addEventListener("click", addProductCart);
+  }
+  //--------------
+
+} 
+ //--------------
+
+//--------------
+//Adicionando o produto no carrinho
+function addProductCart(element){
+  const buttonOfAddCart = element.target;
+  const infoProducts = buttonOfAddCart.parentElement.parentElement;
+  const imagesOfProducts = infoProducts.querySelectorAll(".image-product")[0].src;
+  const titleProduct = infoProducts.querySelectorAll(".title-product")[0].innerText;
+  const priceProduct = infoProducts.querySelectorAll(".product-price")[0].innerText;
+  
+  const nameOfProducts = document.querySelectorAll<HTMLElement>(".title-product-cart");
+  for(let i = 0; i < nameOfProducts.length; i++){
+
+    if(nameOfProducts[i].innerText.trim() === titleProduct.trim()){
+      const rowElement = nameOfProducts[0].closest("tr");  
+
+      if(rowElement){
+        const inputElement = rowElement.querySelector<HTMLInputElement>(".quantity-cart-product");
+
+        if(inputElement){
+            let currentValue = parseInt(inputElement.value) || 0;
+            inputElement.value = (currentValue + 1).toString();
+            console.log(`Novo valor do inpu: ${inputElement.value}`);
+        }
+      }
+      return;
+    }
+  }
+
+  let newElementTr = document.createElement("tr");
+  newElementTr.classList.add("product-in-cart");
+
+  newElementTr.innerHTML = 
+  `
+    <td class="pb-4">
+        <div class="w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md">
+            <strong class="title-product-cart uppercase tracking-wider text-orange-800 text-center">${titleProduct}</strong>
+            <img class="rounded-md" src="${imagesOfProducts}" alt="${titleProduct}">
+        </div>
+    </td>
+
+    <td>
+      <span class="price-product-cart text-gray-700 font-bold">${priceProduct}</span>
+    </td>
+
+    <td>
+      <input class="quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1" type="number" placeholder="" value="1">
+    </td>
+
+    <td>
+      <button class="remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
+    </td>
+  `
+
+  const addInTbody = document.querySelector<HTMLElement>(".table-cart tbody");
+  addInTbody?.append(newElementTr);
+
+  updateTotal();
+  newElementTr.querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0].addEventListener("change", updateTotal);
+  newElementTr.querySelectorAll<HTMLButtonElement>(".remove-product-cart")[0].addEventListener("click", removeItem);
 }
+//--------------
 
 //--------------
   //remover o produto do carrinho
@@ -73,12 +145,6 @@ function updateTotal(){
 
 //--------------
 
-
-
-//--------------
-
-
-//--------------    
 
 buttonPay?.addEventListener("click", ()=>{
   toggleModal();
