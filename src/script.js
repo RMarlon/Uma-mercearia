@@ -5,6 +5,7 @@ var fade = document.querySelector("#fade");
 var modal = document.querySelector("#modal");
 var car = document.querySelector(".car");
 //--------------
+//Verificando se o HTML do DOM já foi carregado
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", loading);
 }
@@ -12,8 +13,9 @@ else {
     loading();
 }
 //--------------
+//--------------
+// Eventos que vão rodar apenas quando o DOM estiver carregado
 function loading() {
-    // Eventos
     //--------------
     //Pegando o botão de remover o produto
     var removeProductCartBtn = document.querySelectorAll(".remove-product-cart");
@@ -25,7 +27,7 @@ function loading() {
     //Peganquando os inputs de quantidade
     var quantityInputCart = document.querySelectorAll(".quantity-cart-product");
     for (var i = 0; i < quantityInputCart.length; i++) {
-        quantityInputCart[i].addEventListener("change", updateTotal);
+        quantityInputCart[i].addEventListener("change", checkValueInput);
     }
     //--------------
     //--------------
@@ -35,6 +37,39 @@ function loading() {
         buttonAddCart[i].addEventListener("click", addProductCart);
     }
     //--------------
+    //--------------
+    //Evento click para abrir o modal de pagamento por pix
+    buttonPay === null || buttonPay === void 0 ? void 0 : buttonPay.addEventListener("click", function () {
+        toggleModal();
+    });
+    //--------------
+    //--------------
+    //Evento de click para abrir o modal do carrinho
+    car === null || car === void 0 ? void 0 : car.addEventListener("click", function () {
+        if (shoppingCart) {
+            shoppingCart.style.display;
+            shoppingCart.style.display === "none" ? "block" : "none";
+        }
+    });
+    //--------------
+    //--------------
+    //Evendo de click para fechar o modal de pagamento por pix
+    [closedModalBtn, fade].forEach(function (element) {
+        element === null || element === void 0 ? void 0 : element.addEventListener("click", function () {
+            toggleModal();
+        });
+    });
+}
+//--------------
+//--------------
+//Remove o produto do carrinho quando input for zero
+function checkValueInput(event) {
+    var targetValue = event.target;
+    var elementTarget = targetValue.closest(".product-in-cart");
+    if (targetValue.value === "0" && elementTarget) {
+        elementTarget.remove();
+    }
+    updateTotal();
 }
 //--------------
 //--------------
@@ -67,7 +102,7 @@ function addProductCart(element) {
     var addInTbody = document.querySelector(".table-cart tbody");
     addInTbody === null || addInTbody === void 0 ? void 0 : addInTbody.append(newElementTr);
     updateTotal();
-    newElementTr.querySelectorAll(".quantity-cart-product")[0].addEventListener("change", updateTotal);
+    newElementTr.querySelectorAll(".quantity-cart-product")[0].addEventListener("change", checkValueInput);
     newElementTr.querySelectorAll(".remove-product-cart")[0].addEventListener("click", removeItem);
 }
 //--------------
@@ -98,20 +133,8 @@ function updateTotal() {
     }
 }
 //--------------
-buttonPay === null || buttonPay === void 0 ? void 0 : buttonPay.addEventListener("click", function () {
-    toggleModal();
-});
-car === null || car === void 0 ? void 0 : car.addEventListener("click", function () {
-    if (shoppingCart) {
-        shoppingCart.style.display =
-            shoppingCart.style.display === "none" ? "block" : "none";
-    }
-});
-[closedModalBtn, fade].forEach(function (element) {
-    element === null || element === void 0 ? void 0 : element.addEventListener("click", function () {
-        toggleModal();
-    });
-});
+//--------------
+//Função para abrir e fechar o modal de pagamento pix
 function toggleModal() {
     modal === null || modal === void 0 ? void 0 : modal.classList.toggle("hide");
     fade === null || fade === void 0 ? void 0 : fade.classList.toggle("hide");
