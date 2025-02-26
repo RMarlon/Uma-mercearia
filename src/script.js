@@ -47,8 +47,8 @@ function loading() {
     //Evento de click para abrir o modal do carrinho
     car === null || car === void 0 ? void 0 : car.addEventListener("click", function () {
         if (shoppingCart) {
-            shoppingCart.style.display;
-            shoppingCart.style.display === "none" ? "block" : "none";
+            shoppingCart.style.display =
+                shoppingCart.style.display === "none" ? "block" : "none";
         }
     });
     //--------------
@@ -97,13 +97,16 @@ function addProductCart(element) {
     }
     var newElementTr = document.createElement("tr");
     newElementTr.classList.add("product-in-cart");
-    newElementTr.innerHTML =
-        "\n    <td class=\"pb-4\">\n        <div class=\"w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md\">\n            <strong class=\"title-product-cart uppercase tracking-wider text-orange-800 text-center\">".concat(titleProduct, "</strong>\n            <img class=\"rounded-md\" src=\"").concat(imagesOfProducts, "\" alt=\"").concat(titleProduct, "\">\n        </div>\n    </td>\n\n    <td>\n      <span class=\"price-product-cart text-gray-700 font-bold\">").concat(priceProduct, "</span>\n    </td>\n\n    <td>\n      <input class=\"quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1\" type=\"number\" placeholder=\"\" value=\"1\">\n    </td>\n\n    <td>\n      <button class=\"remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white\">X</button>\n    </td>\n  ");
+    newElementTr.innerHTML = "\n    <td class=\"pb-4\">\n        <div class=\"w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md\">\n            <strong class=\"title-product-cart uppercase tracking-wider text-orange-800 text-center\">".concat(titleProduct, "</strong>\n            <img class=\"rounded-md\" src=\"").concat(imagesOfProducts, "\" alt=\"").concat(titleProduct, "\">\n        </div>\n    </td>\n\n    <td>\n      <span class=\"price-product-cart text-gray-700 font-bold\">").concat(priceProduct, "</span>\n    </td>\n\n    <td>\n      <input class=\"quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1\" type=\"number\" placeholder=\"\" value=\"1\">\n    </td>\n\n    <td>\n      <button class=\"remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white\">X</button>\n    </td>\n  ");
     var addInTbody = document.querySelector(".table-cart tbody");
     addInTbody === null || addInTbody === void 0 ? void 0 : addInTbody.append(newElementTr);
     updateTotal();
-    newElementTr.querySelectorAll(".quantity-cart-product")[0].addEventListener("change", checkValueInput);
-    newElementTr.querySelectorAll(".remove-product-cart")[0].addEventListener("click", removeItem);
+    newElementTr
+        .querySelectorAll(".quantity-cart-product")[0]
+        .addEventListener("change", checkValueInput);
+    newElementTr
+        .querySelectorAll(".remove-product-cart")[0]
+        .addEventListener("click", removeItem);
 }
 //--------------
 //--------------
@@ -122,9 +125,12 @@ function updateTotal() {
     var totalValue = 0;
     var updateValueCart = document.querySelectorAll(".product-in-cart");
     for (var i = 0; i < updateValueCart.length; i++) {
-        var priceProductCart = updateValueCart[i].querySelectorAll(".price-product-cart")[0].innerText.replace("R$", "").replace(",", ".");
+        var priceProductCart = updateValueCart[i]
+            .querySelectorAll(".price-product-cart")[0]
+            .innerText.replace("R$", "")
+            .replace(",", ".");
         var inputQuantityCart = updateValueCart[i].querySelectorAll(".quantity-cart-product")[0].value;
-        totalValue += (+priceProductCart * +inputQuantityCart);
+        totalValue += +priceProductCart * +inputQuantityCart;
     }
     totalValue = "".concat(totalValue.toFixed(2).replace(".", ","));
     var updateSpanValue = document.querySelector(".total-price span");
