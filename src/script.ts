@@ -62,7 +62,12 @@ function loading() {
   //Evendo de click para fechar o modal de pagamento por pix
   [closedModalBtn, fade].forEach((element) => {
     element?.addEventListener("click", () => {
+      const concluedPay =  document.querySelector(".table-cart tbody");
+      if(concluedPay){
+      concluedPay.innerHTML = "";
+      }
       toggleModal();
+      updateTotal();
     });
   });
 }

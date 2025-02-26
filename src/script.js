@@ -42,7 +42,6 @@ function loading() {
     //Evento click para abrir o modal de pagamento por pix
     var buttonPay = document.querySelector("#payment");
     buttonPay === null || buttonPay === void 0 ? void 0 : buttonPay.addEventListener("click", function () {
-        // toggleModal();
         finalizePurchases();
     });
     //--------------
@@ -59,7 +58,12 @@ function loading() {
     //Evendo de click para fechar o modal de pagamento por pix
     [closedModalBtn, fade].forEach(function (element) {
         element === null || element === void 0 ? void 0 : element.addEventListener("click", function () {
+            var concluedPay = document.querySelector(".table-cart tbody");
+            if (concluedPay) {
+                concluedPay.innerHTML = "";
+            }
             toggleModal();
+            updateTotal();
         });
     });
 }
@@ -139,7 +143,7 @@ function finalizePurchases() {
         alert("Seu carrinho está vazio");
     }
     else {
-        alert("\n      Agradecemos pela prefr\u00EAncia!\n      \n      Valor da sua compra \u00E9: R$: ".concat(totalValue, "\n      Aperte em OK e fa\u00E7a seu pagamento via Pix\n      no c\u00F3digo QR que ir\u00E1 aparecer!\n\n      Volte sempre \uD83D\uDE0A;\n      "));
+        alert("\n      Agradecemos pela prefr\u00EAncia!\n\n      Valor da sua compra \u00E9: R$: ".concat(totalValue, "\n      Aperte em OK e fa\u00E7a seu pagamento via Pix\n      no c\u00F3digo QR que ir\u00E1 aparecer!\n\n      Volte sempre \uD83D\uDE0A;\n      "));
         toggleModal();
     }
 }
