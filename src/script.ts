@@ -1,20 +1,14 @@
-const closedModalBtn =
-  document.querySelector<HTMLButtonElement>("#close-modal");
-const shoppingCart = document.getElementById(
-  "shopping-cart"
-) as unknown as HTMLElement | null;
-const buttonPay = document.querySelector<HTMLButtonElement>("#payment");
+const closedModalBtn = document.querySelector<HTMLButtonElement>("#close-modal");
+const shoppingCart = document.getElementById("shopping-cart") as unknown as HTMLElement | null;
 const fade = document.querySelector<HTMLElement>("#fade");
 const modal = document.querySelector<HTMLElement>("#modal");
 const car = document.querySelector<HTMLElement>(".car");
-
+//--------------
+let totalValue: string | number = "0,00";
 //--------------
 //Verificando se o HTML do DOM já foi carregado
 if (document.readyState === "loading") {
-  document.addEventListener(
-    "DOMContentLoaded",
-    loading
-  ) as unknown as HTMLElement;
+  document.addEventListener("DOMContentLoaded", loading) as unknown as HTMLElement;
 } else {
   loading();
 }
@@ -25,9 +19,7 @@ if (document.readyState === "loading") {
 function loading() {
   //--------------
   //Pegando o botão de remover o produto
-  const removeProductCartBtn = document.querySelectorAll<HTMLButtonElement>(
-    ".remove-product-cart"
-  );
+  const removeProductCartBtn = document.querySelectorAll<HTMLButtonElement>(".remove-product-cart");
   for (let i = 0; i < removeProductCartBtn.length; i++) {
     removeProductCartBtn[i].addEventListener("click", removeItem);
   }
@@ -35,9 +27,7 @@ function loading() {
 
   //--------------
   //Peganquando os inputs de quantidade
-  const quantityInputCart = document.querySelectorAll<HTMLInputElement>(
-    ".quantity-cart-product"
-  );
+  const quantityInputCart = document.querySelectorAll<HTMLInputElement>(".quantity-cart-product");
   for (let i = 0; i < quantityInputCart.length; i++) {
     quantityInputCart[i].addEventListener("change", checkValueInput);
   }
@@ -45,17 +35,16 @@ function loading() {
 
   //--------------
   //Pegando o botão de adicionar o produto ao carrinho
-  const buttonAddCart =
-    document.querySelectorAll<HTMLButtonElement>(".add-cart-button");
+  const buttonAddCart = document.querySelectorAll<HTMLButtonElement>(".add-cart-button");
   for (let i = 0; i < buttonAddCart.length; i++) {
     buttonAddCart[i].addEventListener("click", addProductCart);
   }
   //--------------
-
   //--------------
   //Evento click para abrir o modal de pagamento por pix
+  const buttonPay = document.querySelector<HTMLButtonElement>("#payment");
   buttonPay?.addEventListener("click", () => {
-    toggleModal();
+    finalizePurchases();
   });
   //--------------
 
@@ -64,7 +53,7 @@ function loading() {
   car?.addEventListener("click", () => {
     if (shoppingCart) {
       shoppingCart.style.display =
-        shoppingCart.style.display === "none" ? "block" : "none";
+      shoppingCart.style.display === "none" ? "block" : "none";
     }
   });
   //--------------
@@ -83,12 +72,10 @@ function loading() {
 //Remove o produto do carrinho quando input for zero
 function checkValueInput(event) {
   const targetValue = event.target as HTMLInputElement;
-  const elementTarget = targetValue.closest(
-    ".product-in-cart"
-  ) as HTMLElement | null;
+  const elementTarget = targetValue.closest(".product-in-cart") as HTMLElement | null;
 
   if (targetValue.value === "0" && elementTarget) {
-    elementTarget.remove();
+      elementTarget.remove();
   }
 
   updateTotal();
@@ -100,29 +87,21 @@ function checkValueInput(event) {
 function addProductCart(element) {
   const buttonOfAddCart = element.target;
   const infoProducts = buttonOfAddCart.parentElement.parentElement;
-  const imagesOfProducts =
-    infoProducts.querySelectorAll(".image-product")[0].src;
-  const titleProduct =
-    infoProducts.querySelectorAll(".title-product")[0].innerText;
-  const priceProduct =
-    infoProducts.querySelectorAll(".product-price")[0].innerText;
+  const imagesOfProducts = infoProducts.querySelectorAll(".image-product")[0].src;
+  const titleProduct = infoProducts.querySelectorAll(".title-product")[0].innerText;
+  const priceProduct = infoProducts.querySelectorAll(".product-price")[0].innerText;
 
-  const nameOfProducts = document.querySelectorAll<HTMLElement>(
-    ".title-product-cart"
-  );
+  const nameOfProducts = document.querySelectorAll<HTMLElement>(".title-product-cart");
   for (let i = 0; i < nameOfProducts.length; i++) {
     if (nameOfProducts[i].innerText.trim() === titleProduct.trim()) {
       const rowElement = nameOfProducts[0].closest("tr");
 
       if (rowElement) {
-        const inputElement = rowElement.querySelector<HTMLInputElement>(
-          ".quantity-cart-product"
-        );
+        const inputElement = rowElement.querySelector<HTMLInputElement>(".quantity-cart-product");
 
         if (inputElement) {
           let currentValue = parseInt(inputElement.value) || 0;
           inputElement.value = (currentValue + 1).toString();
-          console.log(`Novo valor do inpu: ${inputElement.value}`);
         }
       }
       return;
@@ -157,12 +136,9 @@ function addProductCart(element) {
   addInTbody?.append(newElementTr);
 
   updateTotal();
-  newElementTr
-    .querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0]
-    .addEventListener("change", checkValueInput);
-  newElementTr
-    .querySelectorAll<HTMLButtonElement>(".remove-product-cart")[0]
-    .addEventListener("click", removeItem);
+
+  newElementTr.querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0].addEventListener("change", checkValueInput);
+  newElementTr.querySelectorAll<HTMLButtonElement>(".remove-product-cart")[0].addEventListener("click", removeItem);
 }
 //--------------
 
@@ -183,32 +159,43 @@ function removeItem(event) {
 
 //Atualizando o valor dos produtos dentro do carrinho
 function updateTotal() {
-  let totalValue: string | number = 0;
+  totalValue = 0;
 
-  const updateValueCart =
-    document.querySelectorAll<HTMLElement>(".product-in-cart");
+  const updateValueCart = document.querySelectorAll<HTMLElement>(".product-in-cart");
   for (let i = 0; i < updateValueCart.length; i++) {
-    const priceProductCart = updateValueCart[i]
-      .querySelectorAll<HTMLSpanElement>(".price-product-cart")[0]
-      .innerText.replace("R$", "")
-      .replace(",", ".");
-    const inputQuantityCart = updateValueCart[
-      i
-    ].querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0].value;
+    const priceProductCart = updateValueCart[i].querySelectorAll<HTMLSpanElement>(".price-product-cart")[0].innerText.replace("R$", "").replace(",", ".");
+    const inputQuantityCart = updateValueCart[i].querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0].value;
 
     totalValue += +priceProductCart * +inputQuantityCart;
   }
 
   totalValue = `${totalValue.toFixed(2).replace(".", ",")}`;
 
-  const updateSpanValue =
-    document.querySelector<HTMLSpanElement>(".total-price span");
+  const updateSpanValue = document.querySelector<HTMLSpanElement>(".total-price span");
   if (updateSpanValue) {
     updateSpanValue.innerText = `R$ ${totalValue.toString()}`;
   }
 }
 //--------------
+function finalizePurchases(){
+  if(totalValue === "0,00"){
+    alert("Seu carrinho está vazio");
+  }
+  else{
+    alert(
+      `
+      Agradecemos pela prefrência!
 
+      Valor da sua compra é: R$: ${totalValue}
+      Aperte em OK e faça seu pagamento via Pix
+      no código QR que irá aparecer!
+
+      Volte sempre 😊;
+      `
+    );
+    toggleModal();
+  }
+}
 //--------------
 //Função para abrir e fechar o modal de pagamento pix
 function toggleModal() {

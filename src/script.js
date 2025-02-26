@@ -1,9 +1,10 @@
 var closedModalBtn = document.querySelector("#close-modal");
 var shoppingCart = document.getElementById("shopping-cart");
-var buttonPay = document.querySelector("#payment");
 var fade = document.querySelector("#fade");
 var modal = document.querySelector("#modal");
 var car = document.querySelector(".car");
+//--------------
+var totalValue = "0,00";
 //--------------
 //Verificando se o HTML do DOM já foi carregado
 if (document.readyState === "loading") {
@@ -39,8 +40,10 @@ function loading() {
     //--------------
     //--------------
     //Evento click para abrir o modal de pagamento por pix
+    var buttonPay = document.querySelector("#payment");
     buttonPay === null || buttonPay === void 0 ? void 0 : buttonPay.addEventListener("click", function () {
-        toggleModal();
+        // toggleModal();
+        finalizePurchases();
     });
     //--------------
     //--------------
@@ -89,7 +92,6 @@ function addProductCart(element) {
                 if (inputElement) {
                     var currentValue = parseInt(inputElement.value) || 0;
                     inputElement.value = (currentValue + 1).toString();
-                    console.log("Novo valor do inpu: ".concat(inputElement.value));
                 }
             }
             return;
@@ -101,12 +103,8 @@ function addProductCart(element) {
     var addInTbody = document.querySelector(".table-cart tbody");
     addInTbody === null || addInTbody === void 0 ? void 0 : addInTbody.append(newElementTr);
     updateTotal();
-    newElementTr
-        .querySelectorAll(".quantity-cart-product")[0]
-        .addEventListener("change", checkValueInput);
-    newElementTr
-        .querySelectorAll(".remove-product-cart")[0]
-        .addEventListener("click", removeItem);
+    newElementTr.querySelectorAll(".quantity-cart-product")[0].addEventListener("change", checkValueInput);
+    newElementTr.querySelectorAll(".remove-product-cart")[0].addEventListener("click", removeItem);
 }
 //--------------
 //--------------
@@ -122,13 +120,10 @@ function removeItem(event) {
 //--------------
 //Atualizando o valor dos produtos dentro do carrinho
 function updateTotal() {
-    var totalValue = 0;
+    totalValue = 0;
     var updateValueCart = document.querySelectorAll(".product-in-cart");
     for (var i = 0; i < updateValueCart.length; i++) {
-        var priceProductCart = updateValueCart[i]
-            .querySelectorAll(".price-product-cart")[0]
-            .innerText.replace("R$", "")
-            .replace(",", ".");
+        var priceProductCart = updateValueCart[i].querySelectorAll(".price-product-cart")[0].innerText.replace("R$", "").replace(",", ".");
         var inputQuantityCart = updateValueCart[i].querySelectorAll(".quantity-cart-product")[0].value;
         totalValue += +priceProductCart * +inputQuantityCart;
     }
@@ -139,6 +134,15 @@ function updateTotal() {
     }
 }
 //--------------
+function finalizePurchases() {
+    if (totalValue === "0,00") {
+        alert("Seu carrinho está vazio");
+    }
+    else {
+        alert("\n      Agradecemos pela prefr\u00EAncia!\n      \n      Valor da sua compra \u00E9: R$: ".concat(totalValue, "\n      Aperte em OK e fa\u00E7a seu pagamento via Pix\n      no c\u00F3digo QR que ir\u00E1 aparecer!\n\n      Volte sempre \uD83D\uDE0A;\n      "));
+        toggleModal();
+    }
+}
 //--------------
 //Função para abrir e fechar o modal de pagamento pix
 function toggleModal() {
