@@ -35,3 +35,7 @@
 #shopping-cart{
     display: none;
 }
+
+#shopping-cart.active{
+    display: block;
+}

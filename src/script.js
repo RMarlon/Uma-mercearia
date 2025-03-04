@@ -49,8 +49,7 @@ function loading() {
     //Evento de click para abrir o modal do carrinho
     car === null || car === void 0 ? void 0 : car.addEventListener("click", function () {
         if (shoppingCart) {
-            shoppingCart.style.display =
-                shoppingCart.style.display === "none" ? "block" : "none";
+            shoppingCart.classList.toggle("active");
         }
     });
     //--------------
@@ -59,8 +58,9 @@ function loading() {
     [closedModalBtn, fade].forEach(function (element) {
         element === null || element === void 0 ? void 0 : element.addEventListener("click", function () {
             var concluedPay = document.querySelector(".table-cart tbody");
-            if (concluedPay) {
+            if (concluedPay && shoppingCart) {
                 concluedPay.innerHTML = "";
+                shoppingCart.classList.remove("active");
             }
             toggleModal();
             updateTotal();
@@ -73,7 +73,8 @@ function loading() {
 function checkValueInput(event) {
     var targetValue = event.target;
     var elementTarget = targetValue.closest(".product-in-cart");
-    if (targetValue.value === "0" && elementTarget) {
+    if (targetValue.value <= "0" && elementTarget && shoppingCart) {
+        shoppingCart.classList.remove("active");
         elementTarget.remove();
     }
     updateTotal();
@@ -90,7 +91,7 @@ function addProductCart(element) {
     var nameOfProducts = document.querySelectorAll(".title-product-cart");
     for (var i = 0; i < nameOfProducts.length; i++) {
         if (nameOfProducts[i].innerText.trim() === titleProduct.trim()) {
-            var rowElement = nameOfProducts[0].closest("tr");
+            var rowElement = nameOfProducts[i].closest("tr");
             if (rowElement) {
                 var inputElement = rowElement.querySelector(".quantity-cart-product");
                 if (inputElement) {
@@ -98,6 +99,7 @@ function addProductCart(element) {
                     inputElement.value = (currentValue + 1).toString();
                 }
             }
+            updateTotal();
             return;
         }
     }
@@ -109,6 +111,9 @@ function addProductCart(element) {
     updateTotal();
     newElementTr.querySelectorAll(".quantity-cart-product")[0].addEventListener("change", checkValueInput);
     newElementTr.querySelectorAll(".remove-product-cart")[0].addEventListener("click", removeItem);
+    if (shoppingCart) {
+        shoppingCart.classList.add("active");
+    }
 }
 //--------------
 //--------------
@@ -116,7 +121,8 @@ function addProductCart(element) {
 function removeItem(event) {
     var target = event.target;
     var elementProduct = target.closest(".product-in-cart");
-    if (elementProduct) {
+    if (elementProduct && shoppingCart) {
+        shoppingCart.classList.remove("active");
         elementProduct.remove();
     }
     updateTotal();
@@ -147,6 +153,7 @@ function finalizePurchases() {
         toggleModal();
     }
 }
+//--------------
 //--------------
 //Função para abrir e fechar o modal de pagamento pix
 function toggleModal() {

@@ -1088,6 +1088,10 @@ video {
   display: none;
 }
 
+#shopping-cart.active{
+  display: block;
+}
+
 .hover\:border-b:hover {
   border-bottom-width: 1px;
 }

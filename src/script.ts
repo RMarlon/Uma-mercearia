@@ -3,6 +3,7 @@ const shoppingCart = document.getElementById("shopping-cart") as unknown as HTML
 const fade = document.querySelector<HTMLElement>("#fade");
 const modal = document.querySelector<HTMLElement>("#modal");
 const car = document.querySelector<HTMLElement>(".car");
+
 //--------------
 let totalValue: string | number = "0,00";
 //--------------
@@ -17,6 +18,7 @@ if (document.readyState === "loading") {
 //--------------
 // Eventos que vão rodar apenas quando o DOM estiver carregado
 function loading() {
+  
   //--------------
   //Pegando o botão de remover o produto
   const removeProductCartBtn = document.querySelectorAll<HTMLButtonElement>(".remove-product-cart");
@@ -40,6 +42,7 @@ function loading() {
     buttonAddCart[i].addEventListener("click", addProductCart);
   }
   //--------------
+
   //--------------
   //Evento click para abrir o modal de pagamento por pix
   const buttonPay = document.querySelector<HTMLButtonElement>("#payment");
@@ -50,12 +53,12 @@ function loading() {
 
   //--------------
   //Evento de click para abrir o modal do carrinho
-  car?.addEventListener("click", () => {
-    if (shoppingCart) {
-      shoppingCart.style.display =
-      shoppingCart.style.display === "none" ? "block" : "none";
-    }
+  car?.addEventListener("click", ()=>{
+      if (shoppingCart) {
+        shoppingCart.classList.toggle("active");
+      }
   });
+  
   //--------------
 
   //--------------
@@ -63,8 +66,9 @@ function loading() {
   [closedModalBtn, fade].forEach((element) => {
     element?.addEventListener("click", () => {
       const concluedPay =  document.querySelector(".table-cart tbody");
-      if(concluedPay){
-      concluedPay.innerHTML = "";
+      if(concluedPay && shoppingCart){
+        concluedPay.innerHTML = "";
+        shoppingCart.classList.remove("active");
       }
       toggleModal();
       updateTotal();
@@ -75,11 +79,12 @@ function loading() {
 
 //--------------
 //Remove o produto do carrinho quando input for zero
-function checkValueInput(event) {
+function checkValueInput(event:any) {
   const targetValue = event.target as HTMLInputElement;
   const elementTarget = targetValue.closest(".product-in-cart") as HTMLElement | null;
 
-  if (targetValue.value === "0" && elementTarget) {
+  if (targetValue.value <= "0" && elementTarget && shoppingCart) {
+      shoppingCart.classList.remove("active");
       elementTarget.remove();
   }
 
@@ -89,7 +94,7 @@ function checkValueInput(event) {
 
 //--------------
 //Adicionando o produto no carrinho
-function addProductCart(element) {
+function addProductCart(element:any) {
   const buttonOfAddCart = element.target;
   const infoProducts = buttonOfAddCart.parentElement.parentElement;
   const imagesOfProducts = infoProducts.querySelectorAll(".image-product")[0].src;
@@ -99,7 +104,7 @@ function addProductCart(element) {
   const nameOfProducts = document.querySelectorAll<HTMLElement>(".title-product-cart");
   for (let i = 0; i < nameOfProducts.length; i++) {
     if (nameOfProducts[i].innerText.trim() === titleProduct.trim()) {
-      const rowElement = nameOfProducts[0].closest("tr");
+      const rowElement = nameOfProducts[i].closest("tr");
 
       if (rowElement) {
         const inputElement = rowElement.querySelector<HTMLInputElement>(".quantity-cart-product");
@@ -109,6 +114,7 @@ function addProductCart(element) {
           inputElement.value = (currentValue + 1).toString();
         }
       }
+      updateTotal();
       return;
     }
   }
@@ -144,17 +150,23 @@ function addProductCart(element) {
 
   newElementTr.querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0].addEventListener("change", checkValueInput);
   newElementTr.querySelectorAll<HTMLButtonElement>(".remove-product-cart")[0].addEventListener("click", removeItem);
+
+  if(shoppingCart){
+    shoppingCart.classList.add("active");
+  }
+ 
 }
 //--------------
 
 //--------------
 //remover o produto do carrinho
-function removeItem(event) {
+function removeItem(event:any) {
   const target = event.target as HTMLElement;
 
   const elementProduct = target.closest(".product-in-cart");
 
-  if (elementProduct) {
+  if (elementProduct && shoppingCart) {
+    shoppingCart.classList.remove("active");
     elementProduct.remove();
   }
   updateTotal();
@@ -201,6 +213,8 @@ function finalizePurchases(){
     toggleModal();
   }
 }
+//--------------
+
 //--------------
 //Função para abrir e fechar o modal de pagamento pix
 function toggleModal() {
