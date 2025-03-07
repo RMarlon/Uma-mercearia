@@ -194,23 +194,140 @@ function updateTotal() {
   }
 }
 //--------------
+
+//--------------
 function finalizePurchases(){
-  if(totalValue === "0,00"){
-    alert("Seu carrinho está vazio");
+
+  let notification = document.createElement("div");
+  let btnAlert = document.createElement("button");
+
+  if(totalValue <= "0,00"){
+    notification.classList.add("alert");
+    notification.querySelector<HTMLDivElement>("alert");
+
+      if(notification as HTMLDivElement){
+        notification.setAttribute("style", 
+          `
+          position:absolute;
+          padding:2rem;
+          text-align:center;
+          margin-left:-9rem;
+          border-radius:10px;
+          letter-spacing:3px;
+          transition:0.3s;
+          top:200px;
+          left:50%;
+          color:#FFFFFF;
+          z-index:999;
+          background-color:#9a3412;
+          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);
+     
+          `);
+          notification.innerText = "Seu carrinho está vazio!";
+          document.body.appendChild(notification);
+
+          
+          btnAlert.classList.add("btn-alert");
+          btnAlert.querySelector<HTMLButtonElement>("btn-alert");
+          btnAlert.setAttribute("style",
+          `
+          width:25px;
+          heigth:25px;
+          position:absolute;
+          border-radius:100%;
+          border: solid white 1px;
+          font-weight:bold;
+          background-color:orange;
+          color:#ea580c;
+          box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
+          z-index:1000;
+          top:205px;
+          left:56%;
+  
+          `);
+          btnAlert.innerText = "X";
+          document.body.appendChild(btnAlert);
+        }
+        if(btnAlert && shoppingCart){
+          btnAlert.addEventListener("click", ()=>{
+            notification.style.display = "none";
+            btnAlert.style.display = "none";
+            shoppingCart.classList.remove("active");
+            fade?.classList.toggle("hide");
+          });
+        }
+        fade?.classList.toggle("hide");
+       
+        
   }
   else{
-    alert(
-      `
-      Agradecemos pela prefrência!
 
-      Valor da sua compra é: R$: ${totalValue}
-      Aperte em OK e faça seu pagamento via Pix
-      no código QR que irá aparecer!
+    notification.classList.add("alert");
+    notification.querySelector<HTMLDivElement>("alert");
 
-      Volte sempre 😊;
-      `
-    );
-    toggleModal();
+      if(notification as HTMLDivElement){
+        notification.setAttribute("style", 
+          `
+          position:absolute;
+          padding:2rem;
+          text-align:center;
+          margin-left:-9rem;
+          border-radius:10px;
+          letter-spacing:3px;
+          transition:0.3s;
+          top:200px;
+          left:50%;
+          color:#FFFFFF;
+          z-index:999;
+          background-color:#16a34a;
+          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);
+     
+          `);
+          notification.innerText = 
+          `
+          Agradecemos pela prefrência!
+
+          O valor da sua compra é: R$: ${totalValue}
+          Aperte em OK e faça seu pagamento 
+          via Pix no código QR que irá aparecer!
+
+          Volte sempre 😊 !;
+
+          `;
+          document.body.appendChild(notification);
+
+          
+          btnAlert.classList.add("btn-alert");
+          btnAlert.querySelector<HTMLButtonElement>("btn-alert");
+          btnAlert.setAttribute("style",
+          `
+          width:25px;
+          heigth:25px;
+          position:absolute;
+          border-radius:100%;
+          border: solid white 1px;
+          font-weight:bold;
+          background-color:orange;
+          color:#ea580c;
+          box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
+          z-index:1000;
+          top:205px;
+          left:63%;
+  
+          `);
+          btnAlert.innerText = "X";
+          document.body.appendChild(btnAlert);
+        }
+        toggleModal();
+
+        if(btnAlert && shoppingCart){
+          btnAlert.addEventListener("click", ()=>{
+            notification.style.display = "none";
+            btnAlert.style.display = "none";
+            fade?.classList.toggle("hide");
+          });
+        }
+        fade?.classList.toggle("hide");
   }
 }
 //--------------

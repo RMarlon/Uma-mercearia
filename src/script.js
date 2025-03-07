@@ -144,13 +144,56 @@ function updateTotal() {
     }
 }
 //--------------
+//--------------
 function finalizePurchases() {
-    if (totalValue === "0,00") {
-        alert("Seu carrinho está vazio");
+    var notification = document.createElement("div");
+    var btnAlert = document.createElement("button");
+    if (totalValue <= "0,00") {
+        notification.classList.add("alert");
+        notification.querySelector("alert");
+        if (notification) {
+            notification.setAttribute("style", "\n          position:absolute;\n          padding:2rem;\n          text-align:center;\n          margin-left:-9rem;\n          border-radius:10px;\n          letter-spacing:3px;\n          transition:0.3s;\n          top:200px;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#9a3412;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
+            notification.innerText = "Seu carrinho está vazio!";
+            document.body.appendChild(notification);
+            btnAlert.classList.add("btn-alert");
+            btnAlert.querySelector("btn-alert");
+            btnAlert.setAttribute("style", "\n          width:25px;\n          heigth:25px;\n          position:absolute;\n          border-radius:100%;\n          border: solid white 1px;\n          font-weight:bold;\n          background-color:orange;\n          color:#ea580c;\n          box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);\n          z-index:1000;\n          top:205px;\n          left:56%;\n  \n          ");
+            btnAlert.innerText = "X";
+            document.body.appendChild(btnAlert);
+        }
+        if (btnAlert && shoppingCart) {
+            btnAlert.addEventListener("click", function () {
+                notification.style.display = "none";
+                btnAlert.style.display = "none";
+                shoppingCart.classList.remove("active");
+                fade === null || fade === void 0 ? void 0 : fade.classList.toggle("hide");
+            });
+        }
+        fade === null || fade === void 0 ? void 0 : fade.classList.toggle("hide");
     }
     else {
-        alert("\n      Agradecemos pela prefr\u00EAncia!\n\n      Valor da sua compra \u00E9: R$: ".concat(totalValue, "\n      Aperte em OK e fa\u00E7a seu pagamento via Pix\n      no c\u00F3digo QR que ir\u00E1 aparecer!\n\n      Volte sempre \uD83D\uDE0A;\n      "));
+        notification.classList.add("alert");
+        notification.querySelector("alert");
+        if (notification) {
+            notification.setAttribute("style", "\n          position:absolute;\n          padding:2rem;\n          text-align:center;\n          margin-left:-9rem;\n          border-radius:10px;\n          letter-spacing:3px;\n          transition:0.3s;\n          top:200px;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#16a34a;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
+            notification.innerText =
+                "\n          Agradecemos pela prefr\u00EAncia!\n\n          O valor da sua compra \u00E9: R$: ".concat(totalValue, "\n          Aperte em OK e fa\u00E7a seu pagamento \n          via Pix no c\u00F3digo QR que ir\u00E1 aparecer!\n\n          Volte sempre \uD83D\uDE0A !;\n\n          ");
+            document.body.appendChild(notification);
+            btnAlert.classList.add("btn-alert");
+            btnAlert.querySelector("btn-alert");
+            btnAlert.setAttribute("style", "\n          width:25px;\n          heigth:25px;\n          position:absolute;\n          border-radius:100%;\n          border: solid white 1px;\n          font-weight:bold;\n          background-color:orange;\n          color:#ea580c;\n          box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);\n          z-index:1000;\n          top:205px;\n          left:63%;\n  \n          ");
+            btnAlert.innerText = "X";
+            document.body.appendChild(btnAlert);
+        }
         toggleModal();
+        if (btnAlert && shoppingCart) {
+            btnAlert.addEventListener("click", function () {
+                notification.style.display = "none";
+                btnAlert.style.display = "none";
+                fade === null || fade === void 0 ? void 0 : fade.classList.toggle("hide");
+            });
+        }
+        fade === null || fade === void 0 ? void 0 : fade.classList.toggle("hide");
     }
 }
 //--------------
