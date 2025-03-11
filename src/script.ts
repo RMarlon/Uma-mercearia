@@ -209,7 +209,7 @@ function finalizePurchases(){
         notification.setAttribute("style", 
           `
           position:absolute;
-          padding:2rem;
+          padding:3rem;
           text-align:center;
           margin-left:-9rem;
           border-radius:10px;
@@ -242,7 +242,7 @@ function finalizePurchases(){
           box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
           z-index:1000;
           top:205px;
-          left:56%;
+          left:55%;
   
           `);
           btnAlert.innerText = "X";
@@ -271,10 +271,9 @@ function finalizePurchases(){
           position:absolute;
           padding:2rem;
           text-align:center;
-          margin-left:-9rem;
+          margin-left:-12rem;
           border-radius:10px;
           letter-spacing:3px;
-          transition:0.3s;
           top:200px;
           left:50%;
           color:#FFFFFF;
@@ -301,21 +300,22 @@ function finalizePurchases(){
           btnAlert.querySelector<HTMLButtonElement>("btn-alert");
           btnAlert.setAttribute("style",
           `
-          width:25px;
-          heigth:25px;
+          width:40px;
+          heigth:40px;
           position:absolute;
-          border-radius:100%;
+          border-radius:10px;
           border: solid white 1px;
           font-weight:bold;
+          margin-top:1.5rem;
           background-color:orange;
           color:#ea580c;
           box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
           z-index:1000;
-          top:205px;
-          left:63%;
+          left:50%;
+          top:50%;
   
           `);
-          btnAlert.innerText = "X";
+          btnAlert.innerText = "OK";
           document.body.appendChild(btnAlert);
         }
         toggleModal();

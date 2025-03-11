@@ -11,6 +11,10 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 #fade{
     background-color: rgba(0, 0, 0, 0.6);
 }
