@@ -105,7 +105,7 @@ function addProductCart(element) {
     }
     var newElementTr = document.createElement("tr");
     newElementTr.classList.add("product-in-cart");
-    newElementTr.innerHTML = "\n    <td class=\"pb-4\">\n        <div class=\"w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md\">\n            <strong class=\"title-product-cart uppercase tracking-wider text-orange-800 text-center\">".concat(titleProduct, "</strong>\n            <img class=\"rounded-md\" src=\"").concat(imagesOfProducts, "\" alt=\"").concat(titleProduct, "\">\n        </div>\n    </td>\n\n    <td>\n      <span class=\"price-product-cart text-gray-700 font-bold\">").concat(priceProduct, "</span>\n    </td>\n\n    <td>\n      <input class=\"quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1\" type=\"number\" placeholder=\"\" value=\"1\">\n    </td>\n\n    <td>\n      <button class=\"remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white\">X</button>\n    </td>\n  ");
+    newElementTr.innerHTML = "\n    <td class=\"pb-4 \">\n        <div class=\"w-24 p-1 bg-orange-100 rounded-md\">\n            <strong class=\"title-product-cart uppercase tracking-wider text-orange-800 text-center text-sm sm:text-base\">".concat(titleProduct, "</strong>\n            <img class=\"rounded-md\" src=\"").concat(imagesOfProducts, "\" alt=\"").concat(titleProduct, "\">\n        </div>\n    </td>\n\n    <td>\n      <span class=\"price-product-cart text-gray-500 font-bold\">").concat(priceProduct, "</span>\n    </td>\n\n    <td>\n      <input class=\"quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1\" type=\"number\" placeholder=\"\" value=\"1\">\n    </td>\n\n    <td>\n      <button class=\"remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white\">X</button>\n    </td>\n  ");
     var addInTbody = document.querySelector(".table-cart tbody");
     addInTbody === null || addInTbody === void 0 ? void 0 : addInTbody.append(newElementTr);
     updateTotal();
@@ -157,7 +157,7 @@ function finalizePurchases() {
             document.body.appendChild(notification);
             btnAlert.classList.add("btn-alert");
             btnAlert.querySelector("btn-alert");
-            btnAlert.setAttribute("style", "\n          width:25px;\n          heigth:25px;\n          position:absolute;\n          border-radius:100%;\n          border: solid white 1px;\n          font-weight:bold;\n          background-color:orange;\n          color:#ea580c;\n          box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);\n          z-index:1000;\n          top:205px;\n          left:55%;\n  \n          ");
+            btnAlert.setAttribute("style", "\n          width:25px;\n          heigth:25px;\n          position:absolute;\n          border-radius:100%;\n          border: solid white 1px;\n          font-weight:bold;\n          background-color:orange;\n          color:#ea580c;\n          box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);\n          z-index:1000;\n          top:205px;\n          left:50%;\n  \n          ");
             btnAlert.innerText = "X";
             document.body.appendChild(btnAlert);
         }
@@ -175,13 +175,13 @@ function finalizePurchases() {
         notification.classList.add("alert");
         notification.querySelector("alert");
         if (notification) {
-            notification.setAttribute("style", "\n          position:absolute;\n          padding:2rem;\n          text-align:center;\n          margin-left:-12rem;\n          border-radius:10px;\n          letter-spacing:3px;\n          top:200px;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#16a34a;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
+            notification.setAttribute("style", "\n          position:absolute;\n          padding:1rem;\n          text-align:center;\n          margin-left:-9.7rem; \n          border-radius:10px;\n          border:1px solid orange;\n          letter-spacing:2px;\n          font-size:16px;\n          text-align: justify;\n          top:32%;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#16a34a;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
             notification.innerText =
                 "\n          Agradecemos pela prefr\u00EAncia!\n\n          O valor da sua compra \u00E9: R$: ".concat(totalValue, "\n          Aperte em OK e fa\u00E7a seu pagamento \n          via Pix no c\u00F3digo QR que ir\u00E1 aparecer!\n\n          Volte sempre \uD83D\uDE0A !;\n\n          ");
             document.body.appendChild(notification);
             btnAlert.classList.add("btn-alert");
             btnAlert.querySelector("btn-alert");
-            btnAlert.setAttribute("style", "\n          width:40px;\n          heigth:40px;\n          position:absolute;\n          border-radius:10px;\n          border: solid white 1px;\n          font-weight:bold;\n          margin-top:1.5rem;\n          background-color:orange;\n          color:#ea580c;\n          box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);\n          z-index:1000;\n          left:50%;\n          top:50%;\n  \n          ");
+            btnAlert.setAttribute("style", "\n          width:40px;\n          heigth:40px;\n          position:absolute;\n          border-radius:10px;\n          border: solid white 1px;\n          font-weight:bold;\n          margin-left:5rem;\n          \n          background-color:orange;\n          color:#ea580c;\n          box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);\n          z-index:1000;\n          left:50%;\n          top:50%;\n\n          ");
             btnAlert.innerText = "OK";
             document.body.appendChild(btnAlert);
         }

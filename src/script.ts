@@ -123,15 +123,15 @@ function addProductCart(element:any) {
   newElementTr.classList.add("product-in-cart");
 
   newElementTr.innerHTML = `
-    <td class="pb-4">
-        <div class="w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md">
-            <strong class="title-product-cart uppercase tracking-wider text-orange-800 text-center">${titleProduct}</strong>
+    <td class="pb-4 ">
+        <div class="w-24 p-1 bg-orange-100 rounded-md">
+            <strong class="title-product-cart uppercase tracking-wider text-orange-800 text-center text-sm sm:text-base">${titleProduct}</strong>
             <img class="rounded-md" src="${imagesOfProducts}" alt="${titleProduct}">
         </div>
     </td>
 
     <td>
-      <span class="price-product-cart text-gray-700 font-bold">${priceProduct}</span>
+      <span class="price-product-cart text-gray-500 font-bold">${priceProduct}</span>
     </td>
 
     <td>
@@ -242,7 +242,7 @@ function finalizePurchases(){
           box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
           z-index:1000;
           top:205px;
-          left:55%;
+          left:50%;
   
           `);
           btnAlert.innerText = "X";
@@ -269,12 +269,15 @@ function finalizePurchases(){
         notification.setAttribute("style", 
           `
           position:absolute;
-          padding:2rem;
+          padding:1rem;
           text-align:center;
-          margin-left:-12rem;
+          margin-left:-9.7rem; 
           border-radius:10px;
-          letter-spacing:3px;
-          top:200px;
+          border:1px solid orange;
+          letter-spacing:2px;
+          font-size:16px;
+          text-align: justify;
+          top:32%;
           left:50%;
           color:#FFFFFF;
           z-index:999;
@@ -306,14 +309,15 @@ function finalizePurchases(){
           border-radius:10px;
           border: solid white 1px;
           font-weight:bold;
-          margin-top:1.5rem;
+          margin-left:5rem;
+          
           background-color:orange;
           color:#ea580c;
           box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
           z-index:1000;
           left:50%;
           top:50%;
-  
+
           `);
           btnAlert.innerText = "OK";
           document.body.appendChild(btnAlert);
