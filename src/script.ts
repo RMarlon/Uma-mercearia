@@ -208,7 +208,7 @@ function finalizePurchases(){
       if(notification as HTMLDivElement){
         notification.setAttribute("style", 
           `
-          position:absolute;
+          position:fixed;
           padding:3rem;
           text-align:center;
           margin-left:-9rem;
@@ -231,10 +231,12 @@ function finalizePurchases(){
           btnAlert.querySelector<HTMLButtonElement>("btn-alert");
           btnAlert.setAttribute("style",
           `
+          position:relative;
           width:25px;
           heigth:25px;
-          position:absolute;
+          position:fixed;
           border-radius:100%;
+          margin-left: 9rem;
           border: solid white 1px;
           font-weight:bold;
           background-color:orange;
@@ -268,7 +270,7 @@ function finalizePurchases(){
       if(notification as HTMLDivElement){
         notification.setAttribute("style", 
           `
-          position:absolute;
+          position:fixed;
           padding:1rem;
           text-align:center;
           margin-left:-9.7rem; 
@@ -277,7 +279,7 @@ function finalizePurchases(){
           letter-spacing:2px;
           font-size:16px;
           text-align: justify;
-          top:32%;
+          top:200px;
           left:50%;
           color:#FFFFFF;
           z-index:999;
@@ -303,9 +305,12 @@ function finalizePurchases(){
           btnAlert.querySelector<HTMLButtonElement>("btn-alert");
           btnAlert.setAttribute("style",
           `
-          width:40px;
-          heigth:40px;
-          position:absolute;
+          position:relative;
+          width:80px;
+          position:fixed;
+          display:flex;
+          justify-content: center;
+          align-items:center;
           border-radius:10px;
           border: solid white 1px;
           font-weight:bold;
@@ -316,7 +321,8 @@ function finalizePurchases(){
           box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
           z-index:1000;
           left:50%;
-          top:50%;
+          top:385px;
+          
 
           `);
           btnAlert.innerText = "OK";

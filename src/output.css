@@ -1101,30 +1101,6 @@ html{
   display: block;
 }
 
-@media(min-width:298px){
-  .btn-alert{
-    margin-top: 6.2rem;
-  }
-}
-
-@media(min-width:374px){
-  .btn-alert{
-    margin-top: 5.1rem;
-  }
-}
-
-@media(min-width:412px){
-  .btn-alert{
-    margin-top: 4.1rem;
-  }
-}
-
-@media(min-width:448px){
-  .btn-alert{
-    margin-top: 2.7rem;
-  }
-}
-
 .hover\:border-b:hover {
   border-bottom-width: 1px;
 }
