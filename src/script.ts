@@ -2,7 +2,6 @@ const closedModalBtn = document.querySelector<HTMLButtonElement>("#close-modal")
 const shoppingCart = document.getElementById("shopping-cart") as unknown as HTMLElement | null;
 const fade = document.querySelector<HTMLElement>("#fade");
 const modal = document.querySelector<HTMLElement>("#modal");
-const car = document.querySelector<HTMLElement>(".car");
 
 //--------------
 let totalValue: string | number = "0,00";
@@ -50,17 +49,15 @@ function loading() {
     finalizePurchases();
   });
   //--------------
-
   //--------------
-  //Evento de click para abrir o modal do carrinho
-  car?.addEventListener("click", ()=>{
-      if (shoppingCart) {
-        shoppingCart.classList.toggle("active");
-      }
+  const btnImgCart = document.querySelector<HTMLButtonElement>(".btn-img-cart");
+  btnImgCart?.addEventListener("click", ()=>{
+    if(totalValue === "0,00"){
+      finalizePurchases();
+    }
   });
-  
-  //--------------
 
+  //--------------
   //--------------
   //Evendo de click para fechar o modal de pagamento por pix
   [closedModalBtn, fade].forEach((element) => {
@@ -80,15 +77,14 @@ function loading() {
 //--------------
 //Remove o produto do carrinho quando input for zero
 function checkValueInput(event:any) {
+
   const targetValue = event.target as HTMLInputElement;
-  const elementTarget = targetValue.closest(".product-in-cart") as HTMLElement | null;
+  const elementTarget = targetValue.closest(".product-in-cart");
 
-  if (targetValue.value <= "0" && elementTarget && shoppingCart) {
-      shoppingCart.classList.remove("active");
+  if (targetValue.value <= "0" && elementTarget) {
       elementTarget.remove();
+      updateTotal();
   }
-
-  updateTotal();
 }
 //--------------
 
@@ -160,16 +156,15 @@ function addProductCart(element:any) {
 
 //--------------
 //remover o produto do carrinho
-function removeItem(event:any) {
+function removeItem(event: MouseEvent) {
   const target = event.target as HTMLElement;
+  const elementProduct = target.closest("tr");
 
-  const elementProduct = target.closest(".product-in-cart");
-
-  if (elementProduct && shoppingCart) {
-    shoppingCart.classList.remove("active");
+  if (elementProduct) {
     elementProduct.remove();
+    updateTotal();
   }
-  updateTotal();
+
 }
 
 //--------------
@@ -192,6 +187,10 @@ function updateTotal() {
   if (updateSpanValue) {
     updateSpanValue.innerText = `R$ ${totalValue.toString()}`;
   }
+
+  if(totalValue === "0,00"){
+    shoppingCart?.classList.remove("active");
+  }
 }
 //--------------
 
@@ -208,10 +207,11 @@ function finalizePurchases(){
       if(notification as HTMLDivElement){
         notification.setAttribute("style", 
           `
+          position:relative;
           position:fixed;
-          padding:3rem;
+          padding:2.7rem;
           text-align:center;
-          margin-left:-9rem;
+          margin:0 -11rem;
           border-radius:10px;
           letter-spacing:3px;
           transition:0.3s;
@@ -223,7 +223,7 @@ function finalizePurchases(){
           box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);
      
           `);
-          notification.innerText = "Seu carrinho está vazio!";
+          notification.innerText = "Seu carrinho está vazio 😔!";
           document.body.appendChild(notification);
 
           
@@ -260,7 +260,6 @@ function finalizePurchases(){
         }
         fade?.classList.toggle("hide");
        
-        
   }
   else{
 
@@ -270,16 +269,17 @@ function finalizePurchases(){
       if(notification as HTMLDivElement){
         notification.setAttribute("style", 
           `
+          position:relative;
           position:fixed;
           padding:1rem;
+          margin: 0 -11rem;
           text-align:center;
-          margin-left:-9.7rem; 
           border-radius:10px;
           border:1px solid orange;
           letter-spacing:2px;
           font-size:16px;
           text-align: justify;
-          top:200px;
+          top:180px;
           left:50%;
           color:#FFFFFF;
           z-index:999;
@@ -306,16 +306,15 @@ function finalizePurchases(){
           btnAlert.setAttribute("style",
           `
           position:relative;
-          width:80px;
           position:fixed;
+          width:80px;
           display:flex;
           justify-content: center;
           align-items:center;
           border-radius:10px;
           border: solid white 1px;
           font-weight:bold;
-          margin-left:5rem;
-          
+          margin:-1rem 5rem;
           background-color:orange;
           color:#ea580c;
           box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);

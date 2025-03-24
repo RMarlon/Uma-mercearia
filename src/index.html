@@ -15,7 +15,7 @@
 
         <div class="p-3 pt-6 ">
             <div
-                class="flex flex-col items-center sm:flex-col sm:items-center md:flex-row md:justify-around p-3 bg-orange-400 border border-white rounded-md shadow-slate-500">
+                class="flex flex-col items-center sm:flex-col sm:items-center md:flex-row md:justify-around p-3 bg-orange-400 border border-white rounded-md">
 
                 <div class="w-20 h-20 rounded-full border border-red-400">
                     <a href="#">
@@ -30,28 +30,28 @@
                     </li>
                     <li>
                         <a class="hover:text-orange-700 hover:border-b border-b-orange-700 duration-500 pb-1 font-bold tracking-wider"
-                            href="">Salgados</a>
+                            href="#section-s">Salgados</a>
                     </li>
                     <li>
                         <a class="hover:text-orange-700 hover:border-b border-b-orange-700 duration-500 pb-1 font-bold tracking-wider"
-                            href="">Bebidas</a>
+                            href="#section-b">Bebidas</a>
                     </li>
                     <li>
                         <a class="hover:text-orange-700 hover:border-b border-b-orange-700 duration-500 pb-1 font-bold tracking-wider"
-                            href="">
+                            href="#section-o">
                             Outros itens
                         </a>
                     </li>
                 </ul>
 
                 <div class="car">
-                    <button>
-                        <img class="" src="./img/shopping_cart.svg" alt="">
+                    <button class="btn-img-cart">
+                        <img  src="./img/shopping_cart.svg" alt="">
                     </button>
                 </div>
             </div>
 
-            <div id="shopping-cart" class="fixed mt-4 right-2 2xl:right-52 xl:right-10 lg:right-3 md:right-3 sm:right-7 bg-orange-50 border border-orange-800 p-5 z-40 rounded-md">
+            <div id="shopping-cart" class="fixed  mt-4 right-2 2xl:right-52 xl:right-10 lg:right-3 md:right-3 sm:right-7 bg-orange-50 border border-orange-800 p-5 z-30 rounded-md">
                 <h2 class="text-center uppercase text-rose-400 font-bold border-b border-b-orange-800 pb-3 tracking-wider">Carrinho</h2>
                 <table class="table-cart w-10/12 text-center">
                     <thead class="text-orange-800 uppercase tracking-wider">
@@ -148,7 +148,7 @@
             </div>
 
 
-            <div id="fade" class="hide w-full h-full fixed top-0 left-0 z-30 opacity-100 pointer-events-none"></div>
+            <div id="fade" class="hide w-full h-full fixed top-0 left-0 z-40 opacity-100 pointer-events-none"></div>
             <div id="modal"
                 class="hide fixed left-1/2 top-1/2 p-5 bg-white z-50 -translate-x-1/2 -translate-y-1/2 rounded-md opacity-100 duration-500">
                 <div
@@ -160,8 +160,8 @@
                 <div class="modal-body">
                     <img src="./img/codigo QR.png" alt="codigo QR">
                 </div>
-                <h3 class="text-center text-gray-500 tracking-wide">Aponte a camera do seu celular para o código QR
-                    acima!</h3>
+                <h3 class="text-center text-gray-500 tracking-wide">Chave Pix</h3>
+                <h2 class="text-center text-gray-500 tracking-wide">********</h2>
             </div>
 
             <div class="flex flex-col items-center justify-center">
@@ -188,7 +188,87 @@
                     
                 </div>
             </div>
+
+            <div class="flex flex-col items-center justify-center">
+                <h1 class="text-orange-400 uppercase font-bold tracking-wide mb-6 mt-6">Seção de Salgados</h1>
+
+                <div id="section-s" class="mt-6 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+
+                    <div class="items" id="product-1">
+                        <div
+                            class="all-products-move w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
+                            <h2 class="title-product uppercase tracking-wider pb-3 text-orange-800 font-bold">Pipoca</h2>
+                            <div>
+                                <img class="image-product rounded-md" src="./img/pipoca.png" alt="./img/chiclete.jpg">
+                            </div>
+
+                            <div class="flex flex-col items-center justify-center">
+                                <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                    elit.</p>
+                                <span class="product-price pb-4 text-gray-500 font-bold">R$ 3,00</span>
+                            </div>
+                            <button class="add-cart-button w-full text-center tracking-wide uppercase cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">Adicionar ao carrinho</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center">
+                <h1 class="text-orange-400 uppercase font-bold tracking-wide mb-6 mt-6">Seção de Bebidas</h1>
+
+                <div id="section-b" class="mt-6 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+
+                    <div class="items" id="product-2">
+                        <div
+                            class="all-products-move w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
+                            <h2 class="title-product uppercase tracking-wider pb-3 text-orange-800 font-bold">Refrigerante</h2>
+                            <div>
+                                <img class="image-product rounded-md" src="./img/chiclete.jpg" alt="./img/chiclete.jpg">
+                            </div>
+
+                            <div class="flex flex-col items-center justify-center">
+                                <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                    elit.</p>
+                                <span class="product-price pb-4 text-gray-500 font-bold">R$ 3,00</span>
+                            </div>
+                            <button class="add-cart-button w-full text-center tracking-wide uppercase cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">Adicionar ao carrinho</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center">
+                <h1 class="text-orange-400 uppercase font-bold tracking-wide mb-6 mt-6">Seção outros Itens</h1>
+
+                <div id="section-o" class="mt-6 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+
+                    <div class="items" id="product-3">
+                        <div
+                            class="all-products-move w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
+                            <h2 class="title-product uppercase tracking-wider pb-3 text-orange-800 font-bold">Detergente</h2>
+                            <div>
+                                <img class="image-product rounded-md" src="./img/chiclete.jpg" alt="./img/chiclete.jpg">
+                            </div>
+
+                            <div class="flex flex-col items-center justify-center">
+                                <p class="pt-2 pb-4 text-orange-600">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                    elit.</p>
+                                <span class="product-price pb-4 text-gray-500 font-bold">R$ 3,00</span>
+                            </div>
+                            <button class="add-cart-button w-full text-center tracking-wide uppercase cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">Adicionar ao carrinho</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
+        <footer class="p-3 mt-4 bg-orange-400 border border-white rounded-md">
+            <div class=" flex justify-center items-center">
+                <img class="w-48 h-20" src="./img/loto-title.png" alt="">
+            </div>
+        </footer>
     </div>
     </div>
 
