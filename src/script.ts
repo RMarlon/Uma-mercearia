@@ -83,8 +83,8 @@ function checkValueInput(event:any) {
 
   if (targetValue.value <= "0" && elementTarget) {
       elementTarget.remove();
-      updateTotal();
-  }
+    }
+    updateTotal();
 }
 //--------------
 

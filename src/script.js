@@ -74,8 +74,8 @@ function checkValueInput(event) {
     var elementTarget = targetValue.closest(".product-in-cart");
     if (targetValue.value <= "0" && elementTarget) {
         elementTarget.remove();
-        updateTotal();
     }
+    updateTotal();
 }
 //--------------
 //--------------
