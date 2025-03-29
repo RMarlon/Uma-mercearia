@@ -45,6 +45,7 @@ function loading() {
     });
     //--------------
     //--------------
+    //Evento click que verifica se tem algum item no carrinho
     var btnImgCart = document.querySelector(".btn-img-cart");
     btnImgCart === null || btnImgCart === void 0 ? void 0 : btnImgCart.addEventListener("click", function () {
         if (totalValue === "0,00") {
@@ -64,6 +65,17 @@ function loading() {
             toggleModal();
             updateTotal();
         });
+    });
+    //--------------
+    //--------------
+    //Evento de click que copia a chava pix ao clicar no botão
+    var inputCopy = document.querySelector("#pixCode");
+    var btnPixCopy = document.querySelector("#btn-pix-copy");
+    btnPixCopy === null || btnPixCopy === void 0 ? void 0 : btnPixCopy.addEventListener("click", function () {
+        if (inputCopy) {
+            inputCopy.select();
+            navigator.clipboard.writeText(inputCopy.value);
+        }
     });
 }
 //--------------
@@ -107,8 +119,12 @@ function addProductCart(element) {
     var addInTbody = document.querySelector(".table-cart tbody");
     addInTbody === null || addInTbody === void 0 ? void 0 : addInTbody.append(newElementTr);
     updateTotal();
-    newElementTr.querySelectorAll(".quantity-cart-product")[0].addEventListener("change", checkValueInput);
-    newElementTr.querySelectorAll(".remove-product-cart")[0].addEventListener("click", removeItem);
+    newElementTr
+        .querySelectorAll(".quantity-cart-product")[0]
+        .addEventListener("change", checkValueInput);
+    newElementTr
+        .querySelectorAll(".remove-product-cart")[0]
+        .addEventListener("click", removeItem);
     if (shoppingCart) {
         shoppingCart.classList.add("active");
     }
@@ -130,7 +146,10 @@ function updateTotal() {
     totalValue = 0;
     var updateValueCart = document.querySelectorAll(".product-in-cart");
     for (var i = 0; i < updateValueCart.length; i++) {
-        var priceProductCart = updateValueCart[i].querySelectorAll(".price-product-cart")[0].innerText.replace("R$", "").replace(",", ".");
+        var priceProductCart = updateValueCart[i]
+            .querySelectorAll(".price-product-cart")[0]
+            .innerText.replace("R$", "")
+            .replace(",", ".");
         var inputQuantityCart = updateValueCart[i].querySelectorAll(".quantity-cart-product")[0].value;
         totalValue += +priceProductCart * +inputQuantityCart;
     }
@@ -152,7 +171,7 @@ function finalizePurchases() {
         notification.classList.add("alert");
         notification.querySelector("alert");
         if (notification) {
-            notification.setAttribute("style", "\n          position:relative;\n          position:fixed;\n          padding:2.7rem;\n          text-align:center;\n          margin:0 -11rem;\n          border-radius:10px;\n          letter-spacing:3px;\n          transition:0.3s;\n          top:200px;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#9a3412;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
+            notification.setAttribute("style", "\n          position:relative;\n          position:fixed;\n          max-width:340px;\n          padding:2.7rem;\n          text-align:center;\n          margin:0 -10rem;\n          border-radius:10px;\n          letter-spacing:3px;\n          transition:0.3s;\n          top:200px;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#9a3412;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
             notification.innerText = "Seu carrinho está vazio 😔!";
             document.body.appendChild(notification);
             btnAlert.classList.add("btn-alert");
@@ -176,8 +195,7 @@ function finalizePurchases() {
         notification.querySelector("alert");
         if (notification) {
             notification.setAttribute("style", "\n          position:relative;\n          position:fixed;\n          padding:1rem;\n          margin: 0 -11rem;\n          text-align:center;\n          border-radius:10px;\n          border:1px solid orange;\n          letter-spacing:2px;\n          font-size:16px;\n          text-align: justify;\n          top:180px;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#16a34a;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
-            notification.innerText =
-                "\n          Agradecemos pela prefr\u00EAncia!\n\n          O valor da sua compra \u00E9: R$: ".concat(totalValue, "\n          Aperte em OK e fa\u00E7a seu pagamento \n          via Pix no c\u00F3digo QR que ir\u00E1 aparecer!\n\n          Volte sempre \uD83D\uDE0A !;\n\n          ");
+            notification.innerText = "\n          Agradecemos pela prefr\u00EAncia!\n\n          O valor da sua compra \u00E9: R$: ".concat(totalValue, "\n          Aperte em OK e fa\u00E7a seu pagamento \n          via Pix no c\u00F3digo QR que ir\u00E1 aparecer!\n\n          Volte sempre \uD83D\uDE0A !;\n\n          ");
             document.body.appendChild(notification);
             btnAlert.classList.add("btn-alert");
             btnAlert.querySelector("btn-alert");

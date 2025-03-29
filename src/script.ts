@@ -1,5 +1,8 @@
-const closedModalBtn = document.querySelector<HTMLButtonElement>("#close-modal");
-const shoppingCart = document.getElementById("shopping-cart") as unknown as HTMLElement | null;
+const closedModalBtn =
+  document.querySelector<HTMLButtonElement>("#close-modal");
+const shoppingCart = document.getElementById(
+  "shopping-cart"
+) as unknown as HTMLElement | null;
 const fade = document.querySelector<HTMLElement>("#fade");
 const modal = document.querySelector<HTMLElement>("#modal");
 
@@ -8,7 +11,10 @@ let totalValue: string | number = "0,00";
 //--------------
 //Verificando se o HTML do DOM já foi carregado
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", loading) as unknown as HTMLElement;
+  document.addEventListener(
+    "DOMContentLoaded",
+    loading
+  ) as unknown as HTMLElement;
 } else {
   loading();
 }
@@ -17,10 +23,11 @@ if (document.readyState === "loading") {
 //--------------
 // Eventos que vão rodar apenas quando o DOM estiver carregado
 function loading() {
-  
   //--------------
   //Pegando o botão de remover o produto
-  const removeProductCartBtn = document.querySelectorAll<HTMLButtonElement>(".remove-product-cart");
+  const removeProductCartBtn = document.querySelectorAll<HTMLButtonElement>(
+    ".remove-product-cart"
+  );
   for (let i = 0; i < removeProductCartBtn.length; i++) {
     removeProductCartBtn[i].addEventListener("click", removeItem);
   }
@@ -28,7 +35,9 @@ function loading() {
 
   //--------------
   //Peganquando os inputs de quantidade
-  const quantityInputCart = document.querySelectorAll<HTMLInputElement>(".quantity-cart-product");
+  const quantityInputCart = document.querySelectorAll<HTMLInputElement>(
+    ".quantity-cart-product"
+  );
   for (let i = 0; i < quantityInputCart.length; i++) {
     quantityInputCart[i].addEventListener("change", checkValueInput);
   }
@@ -36,7 +45,8 @@ function loading() {
 
   //--------------
   //Pegando o botão de adicionar o produto ao carrinho
-  const buttonAddCart = document.querySelectorAll<HTMLButtonElement>(".add-cart-button");
+  const buttonAddCart =
+    document.querySelectorAll<HTMLButtonElement>(".add-cart-button");
   for (let i = 0; i < buttonAddCart.length; i++) {
     buttonAddCart[i].addEventListener("click", addProductCart);
   }
@@ -49,10 +59,12 @@ function loading() {
     finalizePurchases();
   });
   //--------------
+
   //--------------
+  //Evento click que verifica se tem algum item no carrinho
   const btnImgCart = document.querySelector<HTMLButtonElement>(".btn-img-cart");
-  btnImgCart?.addEventListener("click", ()=>{
-    if(totalValue === "0,00"){
+  btnImgCart?.addEventListener("click", () => {
+    if (totalValue === "0,00") {
       finalizePurchases();
     }
   });
@@ -62,8 +74,8 @@ function loading() {
   //Evendo de click para fechar o modal de pagamento por pix
   [closedModalBtn, fade].forEach((element) => {
     element?.addEventListener("click", () => {
-      const concluedPay =  document.querySelector(".table-cart tbody");
-      if(concluedPay && shoppingCart){
+      const concluedPay = document.querySelector(".table-cart tbody");
+      if (concluedPay && shoppingCart) {
         concluedPay.innerHTML = "";
         shoppingCart.classList.remove("active");
       }
@@ -71,39 +83,56 @@ function loading() {
       updateTotal();
     });
   });
+  //--------------
+  //--------------
+  //Evento de click que copia a chava pix ao clicar no botão
+  const inputCopy = document.querySelector<HTMLInputElement>("#pixCode");
+  const btnPixCopy = document.querySelector<HTMLButtonElement>("#btn-pix-copy");
+  btnPixCopy?.addEventListener("click",  () => {
+    if (inputCopy) {
+      inputCopy.select();
+      navigator.clipboard.writeText(inputCopy.value);
+    }
+  });
 }
 //--------------
 
 //--------------
 //Remove o produto do carrinho quando input for zero
-function checkValueInput(event:any) {
-
+function checkValueInput(event: any) {
   const targetValue = event.target as HTMLInputElement;
   const elementTarget = targetValue.closest(".product-in-cart");
 
   if (targetValue.value <= "0" && elementTarget) {
-      elementTarget.remove();
-    }
-    updateTotal();
+    elementTarget.remove();
+  }
+  updateTotal();
 }
 //--------------
 
 //--------------
 //Adicionando o produto no carrinho
-function addProductCart(element:any) {
+function addProductCart(element: any) {
   const buttonOfAddCart = element.target;
   const infoProducts = buttonOfAddCart.parentElement.parentElement;
-  const imagesOfProducts = infoProducts.querySelectorAll(".image-product")[0].src;
-  const titleProduct = infoProducts.querySelectorAll(".title-product")[0].innerText;
-  const priceProduct = infoProducts.querySelectorAll(".product-price")[0].innerText;
+  const imagesOfProducts =
+    infoProducts.querySelectorAll(".image-product")[0].src;
+  const titleProduct =
+    infoProducts.querySelectorAll(".title-product")[0].innerText;
+  const priceProduct =
+    infoProducts.querySelectorAll(".product-price")[0].innerText;
 
-  const nameOfProducts = document.querySelectorAll<HTMLElement>(".title-product-cart");
+  const nameOfProducts = document.querySelectorAll<HTMLElement>(
+    ".title-product-cart"
+  );
   for (let i = 0; i < nameOfProducts.length; i++) {
     if (nameOfProducts[i].innerText.trim() === titleProduct.trim()) {
       const rowElement = nameOfProducts[i].closest("tr");
 
       if (rowElement) {
-        const inputElement = rowElement.querySelector<HTMLInputElement>(".quantity-cart-product");
+        const inputElement = rowElement.querySelector<HTMLInputElement>(
+          ".quantity-cart-product"
+        );
 
         if (inputElement) {
           let currentValue = parseInt(inputElement.value) || 0;
@@ -144,13 +173,16 @@ function addProductCart(element:any) {
 
   updateTotal();
 
-  newElementTr.querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0].addEventListener("change", checkValueInput);
-  newElementTr.querySelectorAll<HTMLButtonElement>(".remove-product-cart")[0].addEventListener("click", removeItem);
+  newElementTr
+    .querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0]
+    .addEventListener("change", checkValueInput);
+  newElementTr
+    .querySelectorAll<HTMLButtonElement>(".remove-product-cart")[0]
+    .addEventListener("click", removeItem);
 
-  if(shoppingCart){
+  if (shoppingCart) {
     shoppingCart.classList.add("active");
   }
- 
 }
 //--------------
 
@@ -164,7 +196,6 @@ function removeItem(event: MouseEvent) {
     elementProduct.remove();
     updateTotal();
   }
-
 }
 
 //--------------
@@ -173,45 +204,53 @@ function removeItem(event: MouseEvent) {
 function updateTotal() {
   totalValue = 0;
 
-  const updateValueCart = document.querySelectorAll<HTMLElement>(".product-in-cart");
+  const updateValueCart =
+    document.querySelectorAll<HTMLElement>(".product-in-cart");
   for (let i = 0; i < updateValueCart.length; i++) {
-    const priceProductCart = updateValueCart[i].querySelectorAll<HTMLSpanElement>(".price-product-cart")[0].innerText.replace("R$", "").replace(",", ".");
-    const inputQuantityCart = updateValueCart[i].querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0].value;
+    const priceProductCart = updateValueCart[i]
+      .querySelectorAll<HTMLSpanElement>(".price-product-cart")[0]
+      .innerText.replace("R$", "")
+      .replace(",", ".");
+    const inputQuantityCart = updateValueCart[
+      i
+    ].querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0].value;
 
     totalValue += +priceProductCart * +inputQuantityCart;
   }
 
   totalValue = `${totalValue.toFixed(2).replace(".", ",")}`;
 
-  const updateSpanValue = document.querySelector<HTMLSpanElement>(".total-price span");
+  const updateSpanValue =
+    document.querySelector<HTMLSpanElement>(".total-price span");
   if (updateSpanValue) {
     updateSpanValue.innerText = `R$ ${totalValue.toString()}`;
   }
 
-  if(totalValue === "0,00"){
+  if (totalValue === "0,00") {
     shoppingCart?.classList.remove("active");
   }
 }
 //--------------
 
 //--------------
-function finalizePurchases(){
-
+function finalizePurchases() {
   let notification = document.createElement("div");
   let btnAlert = document.createElement("button");
 
-  if(totalValue <= "0,00"){
+  if (totalValue <= "0,00") {
     notification.classList.add("alert");
     notification.querySelector<HTMLDivElement>("alert");
 
-      if(notification as HTMLDivElement){
-        notification.setAttribute("style", 
-          `
+    if (notification as HTMLDivElement) {
+      notification.setAttribute(
+        "style",
+        `
           position:relative;
           position:fixed;
+          max-width:340px;
           padding:2.7rem;
           text-align:center;
-          margin:0 -11rem;
+          margin:0 -10rem;
           border-radius:10px;
           letter-spacing:3px;
           transition:0.3s;
@@ -222,15 +261,16 @@ function finalizePurchases(){
           background-color:#9a3412;
           box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);
      
-          `);
-          notification.innerText = "Seu carrinho está vazio 😔!";
-          document.body.appendChild(notification);
-
-          
-          btnAlert.classList.add("btn-alert");
-          btnAlert.querySelector<HTMLButtonElement>("btn-alert");
-          btnAlert.setAttribute("style",
           `
+      );
+      notification.innerText = "Seu carrinho está vazio 😔!";
+      document.body.appendChild(notification);
+
+      btnAlert.classList.add("btn-alert");
+      btnAlert.querySelector<HTMLButtonElement>("btn-alert");
+      btnAlert.setAttribute(
+        "style",
+        `
           position:relative;
           width:25px;
           heigth:25px;
@@ -246,29 +286,28 @@ function finalizePurchases(){
           top:205px;
           left:50%;
   
-          `);
-          btnAlert.innerText = "X";
-          document.body.appendChild(btnAlert);
-        }
-        if(btnAlert && shoppingCart){
-          btnAlert.addEventListener("click", ()=>{
-            notification.style.display = "none";
-            btnAlert.style.display = "none";
-            shoppingCart.classList.remove("active");
-            fade?.classList.toggle("hide");
-          });
-        }
+          `
+      );
+      btnAlert.innerText = "X";
+      document.body.appendChild(btnAlert);
+    }
+    if (btnAlert && shoppingCart) {
+      btnAlert.addEventListener("click", () => {
+        notification.style.display = "none";
+        btnAlert.style.display = "none";
+        shoppingCart.classList.remove("active");
         fade?.classList.toggle("hide");
-       
-  }
-  else{
-
+      });
+    }
+    fade?.classList.toggle("hide");
+  } else {
     notification.classList.add("alert");
     notification.querySelector<HTMLDivElement>("alert");
 
-      if(notification as HTMLDivElement){
-        notification.setAttribute("style", 
-          `
+    if (notification as HTMLDivElement) {
+      notification.setAttribute(
+        "style",
+        `
           position:relative;
           position:fixed;
           padding:1rem;
@@ -286,9 +325,9 @@ function finalizePurchases(){
           background-color:#16a34a;
           box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);
      
-          `);
-          notification.innerText = 
           `
+      );
+      notification.innerText = `
           Agradecemos pela prefrência!
 
           O valor da sua compra é: R$: ${totalValue}
@@ -298,13 +337,13 @@ function finalizePurchases(){
           Volte sempre 😊 !;
 
           `;
-          document.body.appendChild(notification);
+      document.body.appendChild(notification);
 
-          
-          btnAlert.classList.add("btn-alert");
-          btnAlert.querySelector<HTMLButtonElement>("btn-alert");
-          btnAlert.setAttribute("style",
-          `
+      btnAlert.classList.add("btn-alert");
+      btnAlert.querySelector<HTMLButtonElement>("btn-alert");
+      btnAlert.setAttribute(
+        "style",
+        `
           position:relative;
           position:fixed;
           width:80px;
@@ -323,20 +362,21 @@ function finalizePurchases(){
           top:385px;
           
 
-          `);
-          btnAlert.innerText = "OK";
-          document.body.appendChild(btnAlert);
-        }
-        toggleModal();
+          `
+      );
+      btnAlert.innerText = "OK";
+      document.body.appendChild(btnAlert);
+    }
+    toggleModal();
 
-        if(btnAlert && shoppingCart){
-          btnAlert.addEventListener("click", ()=>{
-            notification.style.display = "none";
-            btnAlert.style.display = "none";
-            fade?.classList.toggle("hide");
-          });
-        }
+    if (btnAlert && shoppingCart) {
+      btnAlert.addEventListener("click", () => {
+        notification.style.display = "none";
+        btnAlert.style.display = "none";
         fade?.classList.toggle("hide");
+      });
+    }
+    fade?.classList.toggle("hide");
   }
 }
 //--------------
