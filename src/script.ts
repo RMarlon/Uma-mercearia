@@ -150,7 +150,7 @@ function addProductCart(element: any) {
   newElementTr.innerHTML = `
     <td class="pb-4 ">
         <div class="w-24 p-1 bg-orange-100 rounded-md">
-            <strong class="title-product-cart uppercase tracking-wider text-orange-800 text-center text-sm sm:text-base">${titleProduct}</strong>
+            <p class="title-product-cart tracking-wider text-orange-800 text-center text-sm sm:text-base">${titleProduct}</p>
             <img class="rounded-md" src="${imagesOfProducts}" alt="${titleProduct}">
         </div>
     </td>
@@ -263,7 +263,7 @@ function finalizePurchases() {
      
           `
       );
-      notification.innerText = "Seu carrinho está vazio 😔!";
+      notification.innerText = "Seu carrinho está vazio! 😔";
       document.body.appendChild(notification);
 
       btnAlert.classList.add("btn-alert");
@@ -330,11 +330,11 @@ function finalizePurchases() {
       notification.innerText = `
           Agradecemos pela prefrência!
 
-          O valor da sua compra é: R$: ${totalValue}
+          O valor da sua compra é de R$: ${totalValue}
           Aperte em OK e faça seu pagamento 
           via Pix no código QR que irá aparecer!
 
-          Volte sempre 😊 !;
+          Volte sempre! 😊
 
           `;
       document.body.appendChild(notification);

@@ -115,7 +115,7 @@ function addProductCart(element) {
     }
     var newElementTr = document.createElement("tr");
     newElementTr.classList.add("product-in-cart");
-    newElementTr.innerHTML = "\n    <td class=\"pb-4 \">\n        <div class=\"w-24 p-1 bg-orange-100 rounded-md\">\n            <strong class=\"title-product-cart uppercase tracking-wider text-orange-800 text-center text-sm sm:text-base\">".concat(titleProduct, "</strong>\n            <img class=\"rounded-md\" src=\"").concat(imagesOfProducts, "\" alt=\"").concat(titleProduct, "\">\n        </div>\n    </td>\n\n    <td>\n      <span class=\"price-product-cart text-gray-500 font-bold\">").concat(priceProduct, "</span>\n    </td>\n\n    <td>\n      <input class=\"quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1\" type=\"number\" placeholder=\"\" value=\"1\">\n    </td>\n\n    <td>\n      <button class=\"remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white\">X</button>\n    </td>\n  ");
+    newElementTr.innerHTML = "\n    <td class=\"pb-4 \">\n        <div class=\"w-24 p-1 bg-orange-100 rounded-md\">\n            <p class=\"title-product-cart tracking-wider text-orange-800 text-center text-sm sm:text-base\">".concat(titleProduct, "</p>\n            <img class=\"rounded-md\" src=\"").concat(imagesOfProducts, "\" alt=\"").concat(titleProduct, "\">\n        </div>\n    </td>\n\n    <td>\n      <span class=\"price-product-cart text-gray-500 font-bold\">").concat(priceProduct, "</span>\n    </td>\n\n    <td>\n      <input class=\"quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1\" type=\"number\" placeholder=\"\" value=\"1\">\n    </td>\n\n    <td>\n      <button class=\"remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white\">X</button>\n    </td>\n  ");
     var addInTbody = document.querySelector(".table-cart tbody");
     addInTbody === null || addInTbody === void 0 ? void 0 : addInTbody.append(newElementTr);
     updateTotal();
@@ -172,7 +172,7 @@ function finalizePurchases() {
         notification.querySelector("alert");
         if (notification) {
             notification.setAttribute("style", "\n          position:relative;\n          position:fixed;\n          max-width:340px;\n          padding:2.7rem;\n          text-align:center;\n          margin:0 -10rem;\n          border-radius:10px;\n          letter-spacing:3px;\n          transition:0.3s;\n          top:200px;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#9a3412;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
-            notification.innerText = "Seu carrinho está vazio 😔!";
+            notification.innerText = "Seu carrinho está vazio! 😔";
             document.body.appendChild(notification);
             btnAlert.classList.add("btn-alert");
             btnAlert.querySelector("btn-alert");
@@ -195,7 +195,7 @@ function finalizePurchases() {
         notification.querySelector("alert");
         if (notification) {
             notification.setAttribute("style", "\n          position:relative;\n          position:fixed;\n          padding:1rem;\n          margin: 0 -11rem;\n          text-align:center;\n          border-radius:10px;\n          border:1px solid orange;\n          letter-spacing:2px;\n          font-size:16px;\n          text-align: justify;\n          top:180px;\n          left:50%;\n          color:#FFFFFF;\n          z-index:999;\n          background-color:#16a34a;\n          box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n     \n          ");
-            notification.innerText = "\n          Agradecemos pela prefr\u00EAncia!\n\n          O valor da sua compra \u00E9: R$: ".concat(totalValue, "\n          Aperte em OK e fa\u00E7a seu pagamento \n          via Pix no c\u00F3digo QR que ir\u00E1 aparecer!\n\n          Volte sempre \uD83D\uDE0A !;\n\n          ");
+            notification.innerText = "\n          Agradecemos pela prefr\u00EAncia!\n\n          O valor da sua compra \u00E9 de R$: ".concat(totalValue, "\n          Aperte em OK e fa\u00E7a seu pagamento \n          via Pix no c\u00F3digo QR que ir\u00E1 aparecer!\n\n          Volte sempre! \uD83D\uDE0A\n\n          ");
             document.body.appendChild(notification);
             btnAlert.classList.add("btn-alert");
             btnAlert.querySelector("btn-alert");
