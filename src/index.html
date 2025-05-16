@@ -46,7 +46,7 @@
 
                 <div class="car">
                     <button class="btn-img-cart relative">
-                        <div class="absolute right-1 w-4 h-4 rounded-full bg-orange-800 border flex items-center justify-center p-2">0</div>
+                        <div id="count-cart" class="absolute left-0 w-4 h-4 rounded-full text-orange-200 text-xs bg-orange-800 border flex items-center justify-center p-2">0</div>
                         <img  src="./img/shopping_cart.svg" alt="image do carrinho" class="w-9">
                     </button>
                 </div>
@@ -55,61 +55,21 @@
             <div id="shopping-cart" class="absolute mt-4 right-2 2xl:right-52 xl:right-10 lg:right-3 md:right-3 sm:right-7 bg-orange-50 border border-orange-800 p-5 z-30 rounded-md">
                 <h2 class="text-center uppercase text-rose-400 font-bold border-b border-b-orange-800 pb-3 tracking-wider">Carrinho</h2>
                 <table class="table-cart w-10/12 text-center">
-                    <thead class="text-orange-800 uppercase tracking-wider">
+                    <thead class="text-orange-800 tracking-wider">
                         <tr class="p-4">
                             <th class="pt-4 pb-4 pr-3 text-sm sm:text-base sm:pl-4">Item</th>
-                            <th class="pt-4 pb-4 text-sm sm:text-base sm:pl-4">Preço</th>
+                            <th class="pt-4 pb-4 text-sm sm:text-base">Preço</th>
                             <th class="pl-3 pt-4 pb-4 text-sm sm:text-base sm:pl-4">Quantidade</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <tr class="product-in-cart">
-                            <td class="pb-4">
-                                <div class="w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md">
-                                    <strong class="title-product-cart uppercase tracking-wider text-orange-800 text-center">Bala</strong>
-                                    <img class="rounded-md" src="./img/loto-title.png" alt="bala">
-                                </div>
-                            </td>
-
-                            <td class=" ">
-                                <span class="price-product-cart text-gray-700 font-bold">R$ 3,00</span>
-                            </td>
-
-                            <td class=" ">
-                                <input class="quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1" type="number" placeholder="" value="1">
-                            </td>
-
-                            <td>
-                                <button class="remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
-                            </td>
-                            
-                        </tr>
-
-                        <tr class="product-in-cart">
-                            <td class="pt-4">
-                                <div class="w-24 max-w-full max-h-full p-1 bg-orange-100 rounded-md">
-                                    <strong class="title-product-cart uppercase tracking-wider text-orange-800 text-center">Pirulito</strong>
-                                    <img class="rounded-md" src="./img/Logotipo.svg" alt="">
-                                </div>
-                            </td>
-
-                            <td class=" ">
-                                <span class="price-product-cart text-gray-700 font-bold">R$ 5,00</span>
-                            </td>
-
-                            <td class=" ">
-                                <input class="quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1" type="number" placeholder="" value="1">
-                            </td>
-    
-                            <td>
-                                <button class="remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
-                            </td>
-                        </tr> -->
+                      
+                        
                     </tbody>
                 </table>
                 <div class="pt-6">
                     <div class="total-price flex justify-end pr-2 pb-2 text-gray-500 font-bold">
-                        <strong class="pr-4">Total</strong>
+                        <strong class="pr-4 ">Total</strong>
                         <span>R$ 0,00</span>
                     </div>
                     <button id="payment"
@@ -183,7 +143,7 @@
                             </div>
 
                             <div class="flex flex-col items-center justify-center">
-                                <p class="pt-2 pb-4 text-orange-600">Melão com chocolate branco</p>
+                                <p class="pt-2 pb-4 text-orange-600 text-center">Melão com chocolate branco</p>
                                 <span class="product-price pb-4 text-gray-500 font-bold">R$ 1,00</span>
                             </div>
                             <button class="add-cart-button w-full text-center tracking-wide cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">
@@ -1043,11 +1003,20 @@
                 
             </div>
         </div>
+
+          <div class="fixed right-5 bottom-36 w-10 h-10 rounded-full bg-orange-300 flex items-center justify-center">
+            <a href="#slider">
+                <img src="./img/arrow up.svg" alt="seta para cima">
+            </a>
+          </div>
+
         <footer class="p-3 mt-4 bg-orange-400 border border-white rounded-md">
             <div class=" flex justify-center items-center">
                 <img class="w-48 h-20" src="./img/loto-title.png" alt="">
             </div>
         </footer>
+
+      
     </div>
     </div>
 

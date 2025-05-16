@@ -1,10 +1,8 @@
-const closedModalBtn =
-  document.querySelector<HTMLButtonElement>("#close-modal");
-const shoppingCart = document.getElementById(
-  "shopping-cart"
-) as unknown as HTMLElement | null;
+const closedModalBtn =  document.querySelector<HTMLButtonElement>("#close-modal");
+const shoppingCart = document.getElementById("shopping-cart") as unknown as HTMLElement | null;
 const fade = document.querySelector<HTMLElement>("#fade");
 const modal = document.querySelector<HTMLElement>("#modal");
+
 
 //--------------
 let totalValue: string | number = "0,00";
@@ -82,6 +80,7 @@ function loading() {
       toggleModal();
       updateTotal();
     });
+    
   });
   //--------------
   //--------------
@@ -107,9 +106,23 @@ function checkValueInput(event: any) {
     elementTarget.remove();
   }
   updateTotal();
+  updateCartCount();
 }
 //--------------
 
+function updateCartCount() {
+  const countCart = document.querySelector<HTMLDivElement>('#count-cart');
+  const quantities = document.querySelectorAll<HTMLInputElement>('.quantity-cart-product');
+
+  let totalItems = 0;
+  quantities.forEach((input) => {
+    totalItems += parseInt(input.value) || 0;
+  });
+
+  if (countCart) {
+    countCart.innerText = totalItems.toString();
+  }
+}
 //--------------
 //Adicionando o produto no carrinho
 function addProductCart(element: any) {
@@ -148,30 +161,34 @@ function addProductCart(element: any) {
   newElementTr.classList.add("product-in-cart");
 
   newElementTr.innerHTML = `
-    <td class="pb-4 ">
-        <div class="w-24 p-1 bg-orange-100 rounded-md">
-            <p class="title-product-cart tracking-wider text-orange-800 text-center text-sm sm:text-base">${titleProduct}</p>
+    
+    <td class="pb-4">
+        <div class="w-24 p-1 bg-orange-100 rounded-md mr-3">
+            <p class="title-product-cart tracking-wider text-orange-800 text-center text-xs pb-2">${titleProduct}</p>
             <img class="rounded-md" src="${imagesOfProducts}" alt="${titleProduct}">
         </div>
     </td>
 
     <td>
-      <span class="price-product-cart text-gray-500 font-bold">${priceProduct}</span>
+      <span class="price-product-cart text-gray-500 text-xs font-semibold ">${priceProduct}</span>
     </td>
 
     <td>
-      <input class="quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1" type="number" placeholder="" value="1">
+      <input class="quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold " type="number" value="1">
     </td>
 
     <td>
       <button class="remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white">X</button>
     </td>
+    
   `;
 
   const addInTbody = document.querySelector<HTMLElement>(".table-cart tbody");
   addInTbody?.append(newElementTr);
 
   updateTotal();
+  updateCartCount()
+  
 
   newElementTr
     .querySelectorAll<HTMLInputElement>(".quantity-cart-product")[0]
@@ -195,6 +212,7 @@ function removeItem(event: MouseEvent) {
   if (elementProduct) {
     elementProduct.remove();
     updateTotal();
+    updateCartCount();
   }
 }
 

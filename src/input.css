@@ -20,7 +20,7 @@ html{
 }
 
 #modal{
-    width: 500px;
+    width: 400px;
     max-width: 90%;
 }
 
@@ -33,7 +33,7 @@ html{
 }
 
 #modal.hide{
-    left:0%;
+    left:-10%;
 }
 
 #shopping-cart{

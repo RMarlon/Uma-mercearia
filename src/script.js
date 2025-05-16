@@ -88,8 +88,20 @@ function checkValueInput(event) {
         elementTarget.remove();
     }
     updateTotal();
+    updateCartCount();
 }
 //--------------
+function updateCartCount() {
+    var countCart = document.querySelector('#count-cart');
+    var quantities = document.querySelectorAll('.quantity-cart-product');
+    var totalItems = 0;
+    quantities.forEach(function (input) {
+        totalItems += parseInt(input.value) || 0;
+    });
+    if (countCart) {
+        countCart.innerText = totalItems.toString();
+    }
+}
 //--------------
 //Adicionando o produto no carrinho
 function addProductCart(element) {
@@ -115,10 +127,11 @@ function addProductCart(element) {
     }
     var newElementTr = document.createElement("tr");
     newElementTr.classList.add("product-in-cart");
-    newElementTr.innerHTML = "\n    <td class=\"pb-4 \">\n        <div class=\"w-24 p-1 bg-orange-100 rounded-md\">\n            <p class=\"title-product-cart tracking-wider text-orange-800 text-center text-sm sm:text-base\">".concat(titleProduct, "</p>\n            <img class=\"rounded-md\" src=\"").concat(imagesOfProducts, "\" alt=\"").concat(titleProduct, "\">\n        </div>\n    </td>\n\n    <td>\n      <span class=\"price-product-cart text-gray-500 font-bold\">").concat(priceProduct, "</span>\n    </td>\n\n    <td>\n      <input class=\"quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold p-1\" type=\"number\" placeholder=\"\" value=\"1\">\n    </td>\n\n    <td>\n      <button class=\"remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white\">X</button>\n    </td>\n  ");
+    newElementTr.innerHTML = "\n    \n    <td class=\"pb-4\">\n        <div class=\"w-24 p-1 bg-orange-100 rounded-md mr-3\">\n            <p class=\"title-product-cart tracking-wider text-orange-800 text-center text-xs pb-2\">".concat(titleProduct, "</p>\n            <img class=\"rounded-md\" src=\"").concat(imagesOfProducts, "\" alt=\"").concat(titleProduct, "\">\n        </div>\n    </td>\n\n    <td>\n      <span class=\"price-product-cart text-gray-500 text-xs font-semibold \">").concat(priceProduct, "</span>\n    </td>\n\n    <td>\n      <input class=\"quantity-cart-product w-16 outline-none border-none rounded-md text-center text-gray-700 font-bold \" type=\"number\" value=\"1\">\n    </td>\n\n    <td>\n      <button class=\"remove-product-cart w-5 h-5 flex justify-center items-center p-3 bg-orange-200 border border-orange-700 rounded-full text-white\">X</button>\n    </td>\n    \n  ");
     var addInTbody = document.querySelector(".table-cart tbody");
     addInTbody === null || addInTbody === void 0 ? void 0 : addInTbody.append(newElementTr);
     updateTotal();
+    updateCartCount();
     newElementTr
         .querySelectorAll(".quantity-cart-product")[0]
         .addEventListener("change", checkValueInput);
@@ -138,6 +151,7 @@ function removeItem(event) {
     if (elementProduct) {
         elementProduct.remove();
         updateTotal();
+        updateCartCount();
     }
 }
 //--------------
