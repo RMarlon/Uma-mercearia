@@ -134,7 +134,7 @@
 
                 <div id="section-d" class="mt-6 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
 
-                    <div class="items" id="product-0">
+                    <div class="items" id="product-0" action="https://mail.google.com/mail/u/0/#inbox" method="POST" data-item name="obj">
                         <div
                             class="all-products-move w-60  max-w-full max-h-full bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center">
                             <h2 class="title-product tracking-wider pb-3 text-orange-800">IceKiss Melão</h2>
@@ -142,11 +142,16 @@
                                 <img class="image-product rounded-md" src="https://docefesta.jetassets.com.br/produto/multifotos/hd/20230711151204_1346998654_DMZ.png" alt="icekiss melão">
                             </div>
 
-                            <div class="flex flex-col items-center justify-center">
-                                <p class="pt-2 pb-4 text-orange-600 text-center">Melão com chocolate branco</p>
-                                <span class="product-price pb-4 text-gray-500 font-bold">R$ 1,00</span>
+                            <p class="pt-2 pb-2 text-orange-600 text-center">Melão com chocolate branco</p>
+                            <div class="flex gap-3 text-center">
+                                                 
+                                <button id="btn-less" class="w-7 h-7 flex items-center justify-center bg-orange-600  text-white border border-orange-700 rounded-full cursor-pointer">-</button>
+                                <strong id="qtd">1</strong>
+                                <button id="btn-more" class="w-7 h-7 flex items-center justify-center bg-blue-600  text-white border border-blue-700 rounded-full cursor-pointer">+</button>
+                                
                             </div>
-                            <button class="add-cart-button w-full text-center tracking-wide cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">
+                            <span class="product-price py-2 px-2 text-gray-500 font-bold">R$ 1,00</span>
+                            <button id="add-item" data-button class="add-cart-button w-full text-center tracking-wide cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">
                                 <a href="#" rel="noopener noreferrer">Adicionar ao carrinho</a>
                             </button>
                         </div>
@@ -160,8 +165,8 @@
                                 <img class="image-product rounded-md" src="https://images.tcdn.com.br/img/img_prod/1225570/drops_icekiss_dura_morango_un_3799_1_7c934cf466ee8312b15fac3aef46f6ff.jpg" alt="icekiss morango">
                             </div>
 
+                            <p class="pt-2 pb-2 text-orange-600">Sabor Morango</p>
                             <div class="flex flex-col items-center justify-center">
-                                <p class="pt-2 pb-4 text-orange-600">Sabor Morango</p>
                                 <span class="product-price pb-4 text-gray-500 font-bold">R$ 1,00</span>
                             </div>
                             <button class="add-cart-button w-full text-center tracking-wide cursor-pointer bg-green-500  p-2 rounded-md text-white hover:bg-green-600 duration-300 ease-in">
@@ -1024,6 +1029,7 @@
 
     <script src="./slide.js"></script>
     <script src="./script.js"></script>
+    <script src="./submitMsg.js"></script>
 </body>
 
 </html>

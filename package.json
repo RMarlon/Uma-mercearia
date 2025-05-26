@@ -10,5 +10,8 @@
   "description": "",
   "devDependencies": {
     "tailwindcss": "^3.4.17"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.3"
   }
 }
