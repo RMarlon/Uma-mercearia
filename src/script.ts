@@ -9,17 +9,11 @@ const elements = {
   inputCopy: document.querySelector<HTMLInputElement>("#pixCode"),
   btnPixCopy: document.querySelector<HTMLButtonElement>("#btn-pix-copy"),
   countCart: document.querySelector<HTMLDivElement>('#count-cart'),
-  btnLess: document.querySelector<HTMLButtonElement>('#btn-less'),
-  btnMore: document.querySelector<HTMLButtonElement>('#btn-more'),
-  qtd: document.querySelector<HTMLElement>('#qtd'),
-  priceItem: document.querySelector<HTMLSpanElement>('.product-price')
+  pixModal: document.querySelector<HTMLElement>("#pix-modal"),
 };
 
 // Estado da aplicação
 let totalValue: number = 0;
-let currentQuantity: number = 1;
-const unitPriceText = elements.priceItem?.textContent || 'R$ 0,00';
-const unitPrice = parseFloat(unitPriceText.replace('R$', '').trim().replace(/\./g, '').replace(',', '.')) || 0;
 
 // Inicialização
 if (document.readyState === "loading") {
@@ -29,9 +23,45 @@ if (document.readyState === "loading") {
 }
 
 function init() {
-  updatePrice(currentQuantity);
-  setupEventListeners();
   setupQuantityControls();
+  setupEventListeners();
+}
+
+function setupQuantityControls() {
+  document.querySelectorAll('.items').forEach(item => {
+    const btnLess = item.querySelector('.btn-less') as HTMLButtonElement;
+    const btnMore = item.querySelector('.btn-more') as HTMLButtonElement;
+    const qtdElement = item.querySelector('.qtd') as HTMLElement;
+    const priceElement = item.querySelector('.product-price') as HTMLElement;
+    
+    if (!btnLess || !btnMore || !qtdElement || !priceElement) return;
+
+    // Obter preço unitário do data-attribute
+    const unitPriceText = priceElement.getAttribute('data-unit-price') || '0';
+    const unitPrice = parseFloat(unitPriceText);
+    let currentQuantity = parseInt(qtdElement.textContent || '1');
+
+    // Função para atualizar a exibição
+    const updateDisplay = () => {
+      qtdElement.textContent = currentQuantity.toString();
+      const totalPrice = unitPrice * currentQuantity;
+      priceElement.textContent = `R$ ${formatCurrency(totalPrice)}`;
+    };
+
+    // Evento para diminuir quantidade
+    btnLess.addEventListener('click', () => {
+      if (currentQuantity > 1) {
+        currentQuantity--;
+        updateDisplay();
+      }
+    });
+
+    // Evento para aumentar quantidade
+    btnMore.addEventListener('click', () => {
+      currentQuantity++;
+      updateDisplay();
+    });
+  });
 }
 
 function setupEventListeners() {
@@ -67,7 +97,9 @@ function setupEventListeners() {
   // Botão do carrinho
   elements.btnImgCart?.addEventListener("click", () => {
     if (totalValue === 0) {
-      finalizePurchases();
+      const notification = document.createElement("div");
+      const btnAlert = document.createElement("button");
+      showEmptyCartNotification(notification, btnAlert);
     }
   });
 
@@ -130,6 +162,8 @@ function updateProductPriceInCart(event: Event) {
 
   const priceElement = productRow.querySelector<HTMLElement>(".price-product-cart");
   const quantity = parseInt(input.value) || 1;
+  const unitPriceText = priceElement?.textContent?.replace('R$', '').trim().replace(/\./g, '').replace(',', '.') || '0';
+  const unitPrice = parseFloat(unitPriceText) / (parseInt(input.dataset.lastQuantity || '1') || 1);
   
   if (priceElement) {
     const newPrice = unitPrice * quantity;
@@ -138,35 +172,6 @@ function updateProductPriceInCart(event: Event) {
   }
   
   updateTotal();
-}
-
-function setupQuantityControls() {
-  elements.btnMore?.addEventListener('click', () => {
-    currentQuantity += 1;
-    updateQuantityDisplay();
-    updatePrice(currentQuantity);
-  });
-
-  elements.btnLess?.addEventListener('click', () => {
-    if (currentQuantity > 1) {
-      currentQuantity -= 1;
-      updateQuantityDisplay();
-      updatePrice(currentQuantity);
-    }
-  });
-}
-
-function updateQuantityDisplay() {
-  if (elements.qtd) {
-    elements.qtd.textContent = currentQuantity.toString();
-  }
-}
-
-function updatePrice(quantity: number) {
-  if (elements.priceItem) {
-    const totalPrice = unitPrice * quantity;
-    elements.priceItem.textContent = `R$ ${formatCurrency(totalPrice)}`;
-  }
 }
 
 function checkValueInput(event: Event) {
@@ -195,12 +200,20 @@ function updateCartCount() {
 
 function addProductCart(event: Event) {
   const button = event.target as HTMLButtonElement;
-  const productInfo = button.closest<HTMLElement>(".product") || button.parentElement?.parentElement;
+  const productItem = button.closest<HTMLElement>(".items");
+  const productInfo = productItem?.querySelector<HTMLElement>(".all-products-move");
   
   if (!productInfo) return;
 
+  // Obter a quantidade atual
+  const qtdElement = productInfo.querySelector<HTMLElement>('.qtd');
+  const currentQuantity = qtdElement ? parseInt(qtdElement.textContent || '1') : 1;
+
   const productImage = productInfo.querySelector<HTMLImageElement>(".image-product")?.src;
   const productTitle = productInfo.querySelector<HTMLElement>(".title-product")?.innerText?.trim();
+  const priceElement = productInfo.querySelector<HTMLElement>(".product-price");
+  const unitPriceText = priceElement?.getAttribute('data-unit-price') || '0';
+  const unitPrice = parseFloat(unitPriceText);
   const productPrice = `R$ ${formatCurrency(unitPrice * currentQuantity)}`;
 
   if (!productImage || !productTitle || !productPrice) return;
@@ -280,9 +293,13 @@ function addProductCart(event: Event) {
   updateTotal();
   updateCartCount();
   
-  currentQuantity = 1;
-  updateQuantityDisplay();
-  updatePrice(currentQuantity);
+  // Resetar quantidade para 1 após adicionar ao carrinho
+  if (qtdElement) {
+    qtdElement.textContent = '1';
+    if (priceElement) {
+      priceElement.textContent = `R$ ${formatCurrency(unitPrice * 1)}`;
+    }
+  }
 }
 
 function removeItem(event: Event) {
@@ -319,59 +336,69 @@ function updateTotal() {
 }
 
 function finalizePurchases(): void {
+  if (totalValue <= 0) {
+    const notification = document.createElement("div");
+    const btnAlert = document.createElement("button");
+    showEmptyCartNotification(notification, btnAlert);
+    return; // Adiciona este return para evitar que o modal do PIX apareça
+  }
+
+  // Mostra primeiro o modal de confirmação
   const notification = document.createElement("div");
   const btnAlert = document.createElement("button");
-
-  if (totalValue <= 0) {
-    showEmptyCartNotification(notification, btnAlert);
-  } else {
-    showCheckoutNotification(notification, btnAlert);
-  }
+  showCheckoutNotification(notification, btnAlert, totalValue);
 }
 
+
 function showEmptyCartNotification(notification: HTMLDivElement, btnAlert: HTMLButtonElement): void {
-  notification.className = "alert";
+  notification.className = "empty-cart-modal";
   notification.style.cssText = `
     position: fixed;
-    max-width: 340px;
-    padding: 2.7rem;
+    max-width: 90%;
+    width: 340px;
+    padding: 2rem;
     text-align: center;
-    margin: 0 -10rem;
     border-radius: 10px;
-    letter-spacing: 3px;
+    letter-spacing: 1px;
     transition: 0.3s;
-    top: 200px;
+    top: 50%;
     left: 50%;
-    color: #FFFFFF;
-    z-index: 999;
-    background-color: #9a3412;
-    box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    font-family: Arial, sans-serif;
+    color: #5c2c0e;
   `;
-  notification.innerText = "Seu carrinho está vazio! 😔";
+  notification.innerHTML = `<p style="margin: 0; font-size: 1.1rem;">Seu carrinho está vazio! 😔</p>`;
   document.body.appendChild(notification);
 
-  btnAlert.className = "btn-alert";
+  btnAlert.className = "close-empty-cart-btn";
   btnAlert.style.cssText = `
-    position: fixed;
-    width: 25px;
-    height: 25px;
-    border-radius: 100%;
-    margin-left: 9rem;
-    border: solid white 1px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #5c2c0e;
+    color: white;
+    border: none;
     font-weight: bold;
-    background-color: orange;
-    color: #ea580c;
-    box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    top: 205px;
-    left: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    top: -15px;
+    right: -15px;
   `;
   btnAlert.innerText = "X";
-  document.body.appendChild(btnAlert);
+  notification.appendChild(btnAlert);
 
   btnAlert.addEventListener("click", () => {
     notification.remove();
-    btnAlert.remove();
     elements.shoppingCart?.classList.remove("active");
     toggleModal();
   });
@@ -379,61 +406,101 @@ function showEmptyCartNotification(notification: HTMLDivElement, btnAlert: HTMLB
   toggleModal();
 }
 
-function showCheckoutNotification(notification: HTMLDivElement, btnAlert: HTMLButtonElement): void {
-  notification.className = "alert";
+function showCheckoutNotification(notification: HTMLDivElement, btnAlert: HTMLButtonElement, totalValue: number): void {
+  notification.className = "checkout-modal";
   notification.style.cssText = `
     position: fixed;
-    padding: 1rem;
-    margin: 0 -11rem;
-    text-align: center;
+    max-width: 90%;
+    width: 340px;
+    padding: 2rem 2rem 3.5rem 2rem;
+    text-align: left;
     border-radius: 10px;
-    border: 1px solid orange;
-    letter-spacing: 2px;
-    font-size: 16px;
-    text-align: justify;
-    top: 180px;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    top: 50%;
     left: 50%;
-    color: #FFFFFF;
-    z-index: 999;
-    background-color: #16a34a;
-    box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+    z-index: 1001; // Aumentado para 1001
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 16px;
+    border: 1px solid #e0e0e0;
   `;
   notification.innerHTML = `
-    Agradecemos pela preferência!<br><br>
-    O valor da sua compra é de R$: ${formatCurrency(totalValue)}<br>
-    Aperte em OK e faça seu pagamento via Pix no código QR que irá aparecer!<br><br>
+    <div style="color: #16a34a; font-weight: bold; text-align: center; margin-bottom: 1rem; font-size: 1.2rem;">
+      Agradecemos pela preferência!
+    </div>
+    O valor da sua compra é de R$: ${formatCurrency(totalValue)}<br><br>
+    Aperte em OK para visualizar o código PIX<br><br>
     Volte sempre! 😊
   `;
   document.body.appendChild(notification);
 
-  btnAlert.className = "btn-alert";
+  btnAlert.className = "confirm-checkout-btn";
   btnAlert.style.cssText = `
-    position: fixed;
-    width: 80px;
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1002;
+    cursor: pointer;
+    transition: all 0.2s;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    border: solid white 1px;
-    font-weight: bold;
-    margin: -1rem 5rem;
-    background-color: orange;
-    color: #ea580c;
-    box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    font-size: 1rem;
+    bottom: 20px;
     left: 50%;
-    top: 385px;
+    transform: translateX(-50%);
   `;
   btnAlert.innerText = "OK";
-  document.body.appendChild(btnAlert);
+  notification.appendChild(btnAlert);
 
   toggleModal();
 
   btnAlert.addEventListener("click", () => {
-    clearCart();
+    // Remove o modal de confirmação
     notification.remove();
-    btnAlert.remove();
-    toggleModal();
+    
+    // Mostra o modal do PIX com z-index maior
+    if (elements.pixModal) {
+      elements.pixModal.style.zIndex = "1002"; // Garante que fique na frente
+      elements.pixModal.classList.remove("hide");
+    }
+    
+    // Opcional: Adicione um botão para fechar o modal do PIX
+    const closePixBtn = document.createElement("button");
+    closePixBtn.textContent = "Fechar";
+    closePixBtn.style.cssText = `
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background-color: #9a3412;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    `;
+    
+    closePixBtn.addEventListener("click", () => {
+      if (elements.pixModal) {
+        elements.pixModal.classList.add("hide");
+      }
+      clearCart();
+    });
+    
+    if (elements.pixModal) {
+      elements.pixModal.appendChild(closePixBtn);
+    }
   });
 }
 
@@ -441,6 +508,11 @@ function toggleModal(): void {
   if (elements.modal && elements.fade) {
     elements.modal.classList.toggle("hide");
     elements.fade.classList.toggle("hide");
+    
+    // Esconde o modal do PIX quando outros modais são mostrados
+    if (elements.pixModal && !elements.modal.classList.contains("hide")) {
+      elements.pixModal.classList.add("hide");
+    }
   }
 }
 

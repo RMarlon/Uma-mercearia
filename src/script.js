@@ -1,4 +1,3 @@
-var _a;
 // Elementos do DOM
 var elements = {
     closedModalBtn: document.querySelector("#close-modal"),
@@ -10,16 +9,10 @@ var elements = {
     inputCopy: document.querySelector("#pixCode"),
     btnPixCopy: document.querySelector("#btn-pix-copy"),
     countCart: document.querySelector('#count-cart'),
-    btnLess: document.querySelector('#btn-less'),
-    btnMore: document.querySelector('#btn-more'),
-    qtd: document.querySelector('#qtd'),
-    priceItem: document.querySelector('.product-price')
+    pixModal: document.querySelector("#pix-modal"),
 };
 // Estado da aplicação
 var totalValue = 0;
-var currentQuantity = 1;
-var unitPriceText = ((_a = elements.priceItem) === null || _a === void 0 ? void 0 : _a.textContent) || 'R$ 0,00';
-var unitPrice = parseFloat(unitPriceText.replace('R$', '').trim().replace(/\./g, '').replace(',', '.')) || 0;
 // Inicialização
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
@@ -28,9 +21,40 @@ else {
     init();
 }
 function init() {
-    updatePrice(currentQuantity);
-    setupEventListeners();
     setupQuantityControls();
+    setupEventListeners();
+}
+function setupQuantityControls() {
+    document.querySelectorAll('.items').forEach(function (item) {
+        var btnLess = item.querySelector('.btn-less');
+        var btnMore = item.querySelector('.btn-more');
+        var qtdElement = item.querySelector('.qtd');
+        var priceElement = item.querySelector('.product-price');
+        if (!btnLess || !btnMore || !qtdElement || !priceElement)
+            return;
+        // Obter preço unitário do data-attribute
+        var unitPriceText = priceElement.getAttribute('data-unit-price') || '0';
+        var unitPrice = parseFloat(unitPriceText);
+        var currentQuantity = parseInt(qtdElement.textContent || '1');
+        // Função para atualizar a exibição
+        var updateDisplay = function () {
+            qtdElement.textContent = currentQuantity.toString();
+            var totalPrice = unitPrice * currentQuantity;
+            priceElement.textContent = "R$ ".concat(formatCurrency(totalPrice));
+        };
+        // Evento para diminuir quantidade
+        btnLess.addEventListener('click', function () {
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                updateDisplay();
+            }
+        });
+        // Evento para aumentar quantidade
+        btnMore.addEventListener('click', function () {
+            currentQuantity++;
+            updateDisplay();
+        });
+    });
 }
 function setupEventListeners() {
     var _a, _b, _c;
@@ -60,7 +84,9 @@ function setupEventListeners() {
     // Botão do carrinho
     (_b = elements.btnImgCart) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
         if (totalValue === 0) {
-            finalizePurchases();
+            var notification = document.createElement("div");
+            var btnAlert = document.createElement("button");
+            showEmptyCartNotification(notification, btnAlert);
         }
     });
     // Fechar modal
@@ -111,44 +137,21 @@ function clearCart() {
     (_a = elements.shoppingCart) === null || _a === void 0 ? void 0 : _a.classList.remove("active");
 }
 function updateProductPriceInCart(event) {
+    var _a;
     var input = event.target;
     var productRow = input.closest(".product-in-cart");
     if (!productRow)
         return;
     var priceElement = productRow.querySelector(".price-product-cart");
     var quantity = parseInt(input.value) || 1;
+    var unitPriceText = ((_a = priceElement === null || priceElement === void 0 ? void 0 : priceElement.textContent) === null || _a === void 0 ? void 0 : _a.replace('R$', '').trim().replace(/\./g, '').replace(',', '.')) || '0';
+    var unitPrice = parseFloat(unitPriceText) / (parseInt(input.dataset.lastQuantity || '1') || 1);
     if (priceElement) {
         var newPrice = unitPrice * quantity;
         priceElement.textContent = "R$ ".concat(formatCurrency(newPrice));
         input.dataset.lastQuantity = quantity.toString();
     }
     updateTotal();
-}
-function setupQuantityControls() {
-    var _a, _b;
-    (_a = elements.btnMore) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () {
-        currentQuantity += 1;
-        updateQuantityDisplay();
-        updatePrice(currentQuantity);
-    });
-    (_b = elements.btnLess) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () {
-        if (currentQuantity > 1) {
-            currentQuantity -= 1;
-            updateQuantityDisplay();
-            updatePrice(currentQuantity);
-        }
-    });
-}
-function updateQuantityDisplay() {
-    if (elements.qtd) {
-        elements.qtd.textContent = currentQuantity.toString();
-    }
-}
-function updatePrice(quantity) {
-    if (elements.priceItem) {
-        var totalPrice = unitPrice * quantity;
-        elements.priceItem.textContent = "R$ ".concat(formatCurrency(totalPrice));
-    }
 }
 function checkValueInput(event) {
     var target = event.target;
@@ -170,13 +173,20 @@ function updateCartCount() {
     }
 }
 function addProductCart(event) {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d, _e;
     var button = event.target;
-    var productInfo = button.closest(".product") || ((_a = button.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement);
+    var productItem = button.closest(".items");
+    var productInfo = productItem === null || productItem === void 0 ? void 0 : productItem.querySelector(".all-products-move");
     if (!productInfo)
         return;
-    var productImage = (_b = productInfo.querySelector(".image-product")) === null || _b === void 0 ? void 0 : _b.src;
-    var productTitle = (_d = (_c = productInfo.querySelector(".title-product")) === null || _c === void 0 ? void 0 : _c.innerText) === null || _d === void 0 ? void 0 : _d.trim();
+    // Obter a quantidade atual
+    var qtdElement = productInfo.querySelector('.qtd');
+    var currentQuantity = qtdElement ? parseInt(qtdElement.textContent || '1') : 1;
+    var productImage = (_a = productInfo.querySelector(".image-product")) === null || _a === void 0 ? void 0 : _a.src;
+    var productTitle = (_c = (_b = productInfo.querySelector(".title-product")) === null || _b === void 0 ? void 0 : _b.innerText) === null || _c === void 0 ? void 0 : _c.trim();
+    var priceElement = productInfo.querySelector(".product-price");
+    var unitPriceText = (priceElement === null || priceElement === void 0 ? void 0 : priceElement.getAttribute('data-unit-price')) || '0';
+    var unitPrice = parseFloat(unitPriceText);
     var productPrice = "R$ ".concat(formatCurrency(unitPrice * currentQuantity));
     if (!productImage || !productTitle || !productPrice)
         return;
@@ -188,10 +198,10 @@ function addProductCart(event) {
         if (input && productRow) {
             var currentValue = parseInt(input.value) || 0;
             input.value = (currentValue + currentQuantity).toString();
-            var priceElement = productRow.querySelector(".price-product-cart");
-            if (priceElement) {
+            var priceElement_1 = productRow.querySelector(".price-product-cart");
+            if (priceElement_1) {
                 var newPrice = unitPrice * parseInt(input.value);
-                priceElement.textContent = "R$ ".concat(formatCurrency(newPrice));
+                priceElement_1.textContent = "R$ ".concat(formatCurrency(newPrice));
             }
             updateTotal();
             return;
@@ -212,13 +222,17 @@ function addProductCart(event) {
     });
     increaseBtn === null || increaseBtn === void 0 ? void 0 : increaseBtn.addEventListener("click", handleIncreaseQuantity);
     decreaseBtn === null || decreaseBtn === void 0 ? void 0 : decreaseBtn.addEventListener("click", handleDecreaseQuantity);
-    (_e = newRow.querySelector(".remove-product-cart")) === null || _e === void 0 ? void 0 : _e.addEventListener("click", removeItem);
-    (_f = elements.shoppingCart) === null || _f === void 0 ? void 0 : _f.classList.add("active");
+    (_d = newRow.querySelector(".remove-product-cart")) === null || _d === void 0 ? void 0 : _d.addEventListener("click", removeItem);
+    (_e = elements.shoppingCart) === null || _e === void 0 ? void 0 : _e.classList.add("active");
     updateTotal();
     updateCartCount();
-    currentQuantity = 1;
-    updateQuantityDisplay();
-    updatePrice(currentQuantity);
+    // Resetar quantidade para 1 após adicionar ao carrinho
+    if (qtdElement) {
+        qtdElement.textContent = '1';
+        if (priceElement) {
+            priceElement.textContent = "R$ ".concat(formatCurrency(unitPrice * 1));
+        }
+    }
 }
 function removeItem(event) {
     var target = event.target;
@@ -246,54 +260,75 @@ function updateTotal() {
     }
 }
 function finalizePurchases() {
+    if (totalValue <= 0) {
+        var notification_1 = document.createElement("div");
+        var btnAlert_1 = document.createElement("button");
+        showEmptyCartNotification(notification_1, btnAlert_1);
+        return; // Adiciona este return para evitar que o modal do PIX apareça
+    }
+    // Mostra primeiro o modal de confirmação
     var notification = document.createElement("div");
     var btnAlert = document.createElement("button");
-    if (totalValue <= 0) {
-        showEmptyCartNotification(notification, btnAlert);
-    }
-    else {
-        showCheckoutNotification(notification, btnAlert);
-    }
+    showCheckoutNotification(notification, btnAlert, totalValue);
 }
 function showEmptyCartNotification(notification, btnAlert) {
-    notification.className = "alert";
-    notification.style.cssText = "\n    position: fixed;\n    max-width: 340px;\n    padding: 2.7rem;\n    text-align: center;\n    margin: 0 -10rem;\n    border-radius: 10px;\n    letter-spacing: 3px;\n    transition: 0.3s;\n    top: 200px;\n    left: 50%;\n    color: #FFFFFF;\n    z-index: 999;\n    background-color: #9a3412;\n    box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n  ";
-    notification.innerText = "Seu carrinho está vazio! 😔";
+    notification.className = "empty-cart-modal";
+    notification.style.cssText = "\n    position: fixed;\n    max-width: 90%;\n    width: 340px;\n    padding: 2rem;\n    text-align: center;\n    border-radius: 10px;\n    letter-spacing: 1px;\n    transition: 0.3s;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 1000;\n    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);\n    background-color: white;\n    font-family: Arial, sans-serif;\n    color: #5c2c0e;\n  ";
+    notification.innerHTML = "<p style=\"margin: 0; font-size: 1.1rem;\">Seu carrinho est\u00E1 vazio! \uD83D\uDE14</p>";
     document.body.appendChild(notification);
-    btnAlert.className = "btn-alert";
-    btnAlert.style.cssText = "\n    position: fixed;\n    width: 25px;\n    height: 25px;\n    border-radius: 100%;\n    margin-left: 9rem;\n    border: solid white 1px;\n    font-weight: bold;\n    background-color: orange;\n    color: #ea580c;\n    box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);\n    z-index: 1000;\n    top: 205px;\n    left: 50%;\n  ";
+    btnAlert.className = "close-empty-cart-btn";
+    btnAlert.style.cssText = "\n    position: absolute;\n    width: 30px;\n    height: 30px;\n    border-radius: 50%;\n    background-color: #5c2c0e;\n    color: white;\n    border: none;\n    font-weight: bold;\n    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);\n    z-index: 1001;\n    cursor: pointer;\n    transition: all 0.2s;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: 1rem;\n    top: -15px;\n    right: -15px;\n  ";
     btnAlert.innerText = "X";
-    document.body.appendChild(btnAlert);
+    notification.appendChild(btnAlert);
     btnAlert.addEventListener("click", function () {
         var _a;
         notification.remove();
-        btnAlert.remove();
         (_a = elements.shoppingCart) === null || _a === void 0 ? void 0 : _a.classList.remove("active");
         toggleModal();
     });
     toggleModal();
 }
-function showCheckoutNotification(notification, btnAlert) {
-    notification.className = "alert";
-    notification.style.cssText = "\n    position: fixed;\n    padding: 1rem;\n    margin: 0 -11rem;\n    text-align: center;\n    border-radius: 10px;\n    border: 1px solid orange;\n    letter-spacing: 2px;\n    font-size: 16px;\n    text-align: justify;\n    top: 180px;\n    left: 50%;\n    color: #FFFFFF;\n    z-index: 999;\n    background-color: #16a34a;\n    box-shadow: 0 5px 3px 5px rgba(0, 0, 0, 0.5);\n  ";
-    notification.innerHTML = "\n    Agradecemos pela prefer\u00EAncia!<br><br>\n    O valor da sua compra \u00E9 de R$: ".concat(formatCurrency(totalValue), "<br>\n    Aperte em OK e fa\u00E7a seu pagamento via Pix no c\u00F3digo QR que ir\u00E1 aparecer!<br><br>\n    Volte sempre! \uD83D\uDE0A\n  ");
+function showCheckoutNotification(notification, btnAlert, totalValue) {
+    notification.className = "checkout-modal";
+    notification.style.cssText = "\n    position: fixed;\n    max-width: 90%;\n    width: 340px;\n    padding: 2rem 2rem 3.5rem 2rem;\n    text-align: left;\n    border-radius: 10px;\n    letter-spacing: 1px;\n    transition: 0.3s;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 1001; // Aumentado para 1001\n    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);\n    background-color: white;\n    font-family: Arial, sans-serif;\n    color: #333;\n    font-size: 16px;\n    border: 1px solid #e0e0e0;\n  ";
+    notification.innerHTML = "\n    <div style=\"color: #16a34a; font-weight: bold; text-align: center; margin-bottom: 1rem; font-size: 1.2rem;\">\n      Agradecemos pela prefer\u00EAncia!\n    </div>\n    O valor da sua compra \u00E9 de R$: ".concat(formatCurrency(totalValue), "<br><br>\n    Aperte em OK para visualizar o c\u00F3digo PIX<br><br>\n    Volte sempre! \uD83D\uDE0A\n  ");
     document.body.appendChild(notification);
-    btnAlert.className = "btn-alert";
-    btnAlert.style.cssText = "\n    position: fixed;\n    width: 80px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    border-radius: 10px;\n    border: solid white 1px;\n    font-weight: bold;\n    margin: -1rem 5rem;\n    background-color: orange;\n    color: #ea580c;\n    box-shadow: 0 2px 1px 2px rgba(0, 0, 0, 0.1);\n    z-index: 1000;\n    left: 50%;\n    top: 385px;\n  ";
+    btnAlert.className = "confirm-checkout-btn";
+    btnAlert.style.cssText = "\n    position: absolute;\n    width: 100px;\n    height: 40px;\n    border-radius: 20px;\n    background-color: #16a34a;\n    color: white;\n    border: none;\n    font-weight: bold;\n    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);\n    z-index: 1002;\n    cursor: pointer;\n    transition: all 0.2s;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: 1rem;\n    bottom: 20px;\n    left: 50%;\n    transform: translateX(-50%);\n  ";
     btnAlert.innerText = "OK";
-    document.body.appendChild(btnAlert);
+    notification.appendChild(btnAlert);
     toggleModal();
     btnAlert.addEventListener("click", function () {
-        clearCart();
+        // Remove o modal de confirmação
         notification.remove();
-        btnAlert.remove();
-        toggleModal();
+        // Mostra o modal do PIX com z-index maior
+        if (elements.pixModal) {
+            elements.pixModal.style.zIndex = "1002"; // Garante que fique na frente
+            elements.pixModal.classList.remove("hide");
+        }
+        // Opcional: Adicione um botão para fechar o modal do PIX
+        var closePixBtn = document.createElement("button");
+        closePixBtn.textContent = "Fechar";
+        closePixBtn.style.cssText = "\n      position: absolute;\n      bottom: 20px;\n      left: 50%;\n      transform: translateX(-50%);\n      padding: 10px 20px;\n      background-color: #9a3412;\n      color: white;\n      border: none;\n      border-radius: 5px;\n      cursor: pointer;\n    ";
+        closePixBtn.addEventListener("click", function () {
+            if (elements.pixModal) {
+                elements.pixModal.classList.add("hide");
+            }
+            clearCart();
+        });
+        if (elements.pixModal) {
+            elements.pixModal.appendChild(closePixBtn);
+        }
     });
 }
 function toggleModal() {
     if (elements.modal && elements.fade) {
         elements.modal.classList.toggle("hide");
         elements.fade.classList.toggle("hide");
+        // Esconde o modal do PIX quando outros modais são mostrados
+        if (elements.pixModal && !elements.modal.classList.contains("hide")) {
+            elements.pixModal.classList.add("hide");
+        }
     }
 }
 // Utilitários
