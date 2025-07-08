@@ -471,11 +471,11 @@ function showCheckoutNotification(notification: HTMLDivElement, btnAlert: HTMLBu
     
     // Mostra o modal do PIX com z-index maior
     if (elements.pixModal) {
-      elements.pixModal.style.zIndex = "1002"; // Garante que fique na frente
+      elements.pixModal.style.zIndex = "1002"; 
       elements.pixModal.classList.remove("hide");
     }
     
-    // Opcional: Adicione um botão para fechar o modal do PIX
+    // Adiciona um botão para fechar o modal do PIX
     const closePixBtn = document.createElement("button");
     closePixBtn.textContent = "Fechar";
     closePixBtn.style.cssText = `
